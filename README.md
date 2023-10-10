@@ -1,12 +1,13 @@
-# go-playground
-A playground for Golang experimentation
+# go-sharpen-blade
+
+Sharpening my Golang skills with coding challenges and skunkworks
 
 ## Running in Docker
 
-* `docker build -t go-playground .` - Build the Docker image
-* `docker run go-playground` - Run without arguments<br/>
+* `docker build -t go-sharpen-blade .` - Build the Docker image
+* `docker run go-sharpen-blade` - Run without arguments<br/>
   OR <br/>
-  `docker run go-playground /app/go-playground <args>` - Run with the given arguments
+  `docker run go-sharpen-blade /app/go-sharpen-blade <args>` - Run with the given arguments
 
 ## Running Locally
 

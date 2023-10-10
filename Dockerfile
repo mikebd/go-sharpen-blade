@@ -10,6 +10,6 @@ COPY go.mod ./
 ADD config ./config
 ADD main ./main
 
-RUN go build -o go-playground ./main
+RUN go build -o go-sharpen-blade ./main
 
-CMD ["./go-playground"]
+CMD ["./go-sharpen-blade"]

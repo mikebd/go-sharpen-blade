@@ -2,7 +2,7 @@ package main
 
 import (
 	"flag"
-	"go-playground/config"
+	"go-sharpen-blade/config"
 	"log"
 	"os"
 )
