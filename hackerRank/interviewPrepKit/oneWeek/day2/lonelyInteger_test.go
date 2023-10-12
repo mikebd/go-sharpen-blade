@@ -1,4 +1,4 @@
-package day1
+package day2
 
 func Example_lonelyInteger_1() {
 	lonelyInteger([]int32{1, 2, 2, 1, 4})
