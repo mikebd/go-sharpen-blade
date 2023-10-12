@@ -1,5 +1,7 @@
 package model
 
+type Cards []Card
+
 type Card struct {
 	rank Rank
 	suit Suit
