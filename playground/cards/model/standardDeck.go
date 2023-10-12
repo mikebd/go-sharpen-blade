@@ -6,8 +6,8 @@ type StandardDeck struct {
 	cards Cards
 }
 
-func NewStandardDeck() Deck {
-	d := new(StandardDeck)
+func NewStandardDeck() *StandardDeck {
+	d := StandardDeck{}
 	d.cards = []Card{
 		AceHeart,
 		TwoHeart,
@@ -63,7 +63,7 @@ func NewStandardDeck() Deck {
 		KingSpade,
 	}
 	d.Shuffle()
-	return d
+	return &d
 }
 
 func (d *StandardDeck) Cards() *Cards {
