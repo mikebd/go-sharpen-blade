@@ -24,3 +24,4 @@ go.work
 .editorconfig
 
 go-sharpen-blade
+/scratch/
