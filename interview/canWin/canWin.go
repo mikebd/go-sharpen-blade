@@ -36,23 +36,16 @@ func jump(board []int, startingIndex int, visited []bool) bool {
 	}
 
 	leftIndex := startingIndex - currentValue
-	leftAvailable := !outOfBounds(board, leftIndex)
-	if leftAvailable && !visited[leftIndex] {
-		canLeftWin := jump(board, leftIndex, visited)
-		if canLeftWin {
-			return true
-		}
-	}
-
 	rightIndex := startingIndex + currentValue
-	rightAvailable := !outOfBounds(board, rightIndex)
-	if rightAvailable && !visited[rightIndex] {
-		canRightWin := jump(board, rightIndex, visited)
-		if canRightWin {
-			return true
-		}
-	}
+	return isWinningIndex(board, leftIndex, visited) ||
+		isWinningIndex(board, rightIndex, visited)
+}
 
+func isWinningIndex(board []int, index int, visited []bool) bool {
+	indexAvailable := !outOfBounds(board, index)
+	if indexAvailable && !visited[index] {
+		return jump(board, index, visited)
+	}
 	return false
 }
 
