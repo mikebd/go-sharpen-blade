@@ -3,9 +3,14 @@ package main
 import (
 	"flag"
 	"go-sharpen-blade/config"
+	"go-sharpen-blade/playground/gitPull"
 	"log"
 	"os"
 )
+
+func init() {
+	gitPull.Register()
+}
 
 func main() {
 	defer log.Println("Done")
