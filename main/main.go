@@ -31,8 +31,11 @@ func run(args *config.Arguments) error {
 	log.Println("Running:", os.Args)
 
 	if args.WorkingDir != "" {
-		currentDir := os.Getenv("PWD")
-		err := os.Chdir(args.WorkingDir)
+		currentDir, err := os.Getwd()
+		if err != nil {
+			return err
+		}
+		err = os.Chdir(args.WorkingDir)
 		if err != nil {
 			return err
 		}

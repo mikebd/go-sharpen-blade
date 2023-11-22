@@ -1,8 +1,8 @@
 package gitPull
 
 import (
-	"fmt"
 	"go-sharpen-blade/command"
+	"log"
 )
 
 func Register() {
@@ -10,6 +10,14 @@ func Register() {
 }
 
 func gitPull() error {
-	fmt.Println("Running git-pull")
+	directories, err := findGitRepositoryDirectories(".", includeGitRepositoryDirectory)
+	if err != nil {
+		return err
+	}
+
+	for _, directory := range directories {
+		log.Println("Pulling", directory)
+	}
+
 	return nil
 }
