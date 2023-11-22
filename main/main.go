@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"go-sharpen-blade/command"
 	"go-sharpen-blade/config"
 	"go-sharpen-blade/playground/gitPull"
 	"log"
@@ -29,7 +30,23 @@ func main() {
 func run(args *config.Arguments) error {
 	log.Println("Running:", os.Args)
 
-	// TODO: Do something useful here
+	if args.WorkingDir != "" {
+		currentDir := os.Getenv("PWD")
+		err := os.Chdir(args.WorkingDir)
+		if err != nil {
+			return err
+		}
+		defer func(dir string) {
+			_ = os.Chdir(dir)
+		}(currentDir)
+	}
+
+	if args.Command != "" {
+		err := command.Run(args.Command)
+		if err != nil {
+			return err
+		}
+	}
 
 	return nil
 }
