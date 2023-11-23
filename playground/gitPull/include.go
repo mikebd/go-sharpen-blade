@@ -3,6 +3,7 @@ package gitPull
 import (
 	"os"
 	"os/exec"
+	"slices"
 	"strconv"
 )
 
@@ -27,7 +28,7 @@ func includeGitRepositoryDirectory(directory string) bool {
 
 	branch := currentBranchName()
 
-	if !isBranchOfInterest(branch) {
+	if !slices.Contains(branchesOfInterest, branch) {
 		return false
 	}
 
@@ -45,15 +46,6 @@ func currentBranchName() string {
 		return ""
 	}
 	return string(output)[:len(output)-1]
-}
-
-func isBranchOfInterest(branch string) bool {
-	for _, branchOfInterest := range branchesOfInterest {
-		if branch == branchOfInterest {
-			return true
-		}
-	}
-	return false
 }
 
 func isBehindRemote(branch string) bool {
