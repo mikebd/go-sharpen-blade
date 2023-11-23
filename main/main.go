@@ -7,6 +7,7 @@ import (
 	"go-sharpen-blade/playground/gitPull"
 	"log"
 	"os"
+	"time"
 )
 
 func init() {
@@ -14,7 +15,10 @@ func init() {
 }
 
 func main() {
-	defer log.Println("Done")
+	start := time.Now()
+	defer func() {
+		log.Println("Done in", time.Since(start).Round(time.Millisecond))
+	}()
 
 	args := config.ParseArguments()
 	initializeLogging(args.LogTimestamps)
