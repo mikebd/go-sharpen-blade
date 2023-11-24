@@ -1,6 +1,9 @@
 package gitPull
 
-import "os"
+import (
+	"os"
+	"path/filepath"
+)
 
 type includeGitRepositoryDirectoryFunc func(directory string) bool
 
@@ -14,8 +17,8 @@ func findGitRepositoryDirectories(parentDirectory string, include includeGitRepo
 	}
 	for _, dirEntry := range dirEntries {
 		if dirEntry.IsDir() {
-			dirName := parentDirectory + "/" + dirEntry.Name()
-			_, err := os.Stat(dirName + "/.git")
+			dirName := filepath.Join(parentDirectory, dirEntry.Name())
+			_, err := os.Stat(filepath.Join(dirName, ".git"))
 			if err == nil {
 				if include == nil || include(dirName) {
 					result = append(result, dirName)
