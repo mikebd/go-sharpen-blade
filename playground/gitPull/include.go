@@ -2,7 +2,6 @@ package gitPull
 
 import (
 	"github.com/mikebd/go-util/pkg/git"
-	"github.com/mikebd/go-util/pkg/shell"
 	"os"
 	"os/exec"
 	"slices"
@@ -33,7 +32,8 @@ func includeGitRepositoryDirectory(directory string) bool {
 		return false
 	}
 
-	if !isBehindRemote(branch) {
+	behindRemote, errBehindRemote := git.IsBehindRemote(remote, branch)
+	if !behindRemote || errBehindRemote != nil {
 		return false
 	}
 
@@ -47,18 +47,4 @@ func currentBranchName() string {
 		return ""
 	}
 	return string(output)[:len(output)-1]
-}
-
-func isBehindRemote(branch string) bool {
-	fetchErr := git.Fetch(remote, branch)
-	if fetchErr != nil {
-		return false
-	}
-
-	cmd := exec.Command("git", "rev-list", "--count", branch+".."+remote+"/"+branch)
-	output, err := cmd.Output()
-	if err != nil {
-		return false
-	}
-	return shell.IsOutputGreaterThanZero(output)
 }
