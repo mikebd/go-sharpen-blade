@@ -1,10 +1,11 @@
 package gitPull
 
 import (
+	"github.com/mikebd/go-util/pkg/git"
+	"github.com/mikebd/go-util/pkg/shell"
 	"os"
 	"os/exec"
 	"slices"
-	"strconv"
 )
 
 var branchesOfInterest = []string{"main", "master"}
@@ -49,7 +50,7 @@ func currentBranchName() string {
 }
 
 func isBehindRemote(branch string) bool {
-	fetchErr := fetch(branch)
+	fetchErr := git.Fetch(remote, branch)
 	if fetchErr != nil {
 		return false
 	}
@@ -59,21 +60,5 @@ func isBehindRemote(branch string) bool {
 	if err != nil {
 		return false
 	}
-	return isCommandOutputGreaterThanZero(output)
-}
-
-func fetch(branch string) error {
-	cmd := exec.Command("git", "fetch", remote, branch)
-	return cmd.Run()
-}
-
-func isCommandOutputGreaterThanZero(output []byte) bool {
-	if len(output) <= 1 {
-		return false
-	}
-	value, err := strconv.Atoi(string(output)[:len(output)-1])
-	if err != nil {
-
-	}
-	return value > 0
+	return shell.IsOutputGreaterThanZero(output)
 }
