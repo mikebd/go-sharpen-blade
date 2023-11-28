@@ -3,7 +3,6 @@ package gitPull
 import (
 	"github.com/mikebd/go-util/pkg/git"
 	"os"
-	"os/exec"
 	"slices"
 )
 
@@ -26,7 +25,10 @@ func includeGitRepositoryDirectory(directory string) bool {
 		_ = os.Chdir(dir)
 	}(currentDir)
 
-	branch := currentBranchName()
+	branch, errBranch := git.CurrentBranchName()
+	if errBranch != nil {
+		return false
+	}
 
 	if !slices.Contains(branchesOfInterest, branch) {
 		return false
@@ -38,13 +40,4 @@ func includeGitRepositoryDirectory(directory string) bool {
 	}
 
 	return true
-}
-
-func currentBranchName() string {
-	cmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
-	output, err := cmd.Output()
-	if err != nil || len(output) <= 1 {
-		return ""
-	}
-	return string(output)[:len(output)-1]
 }
