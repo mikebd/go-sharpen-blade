@@ -1,10 +1,9 @@
 package gitPull
 
 import (
-	"os"
-	"os/exec"
+	"github.com/mikebd/go-util/pkg/directory"
+	"github.com/mikebd/go-util/pkg/git"
 	"slices"
-	"strconv"
 )
 
 var branchesOfInterest = []string{"main", "master"}
@@ -13,67 +12,30 @@ var branchesOfInterest = []string{"main", "master"}
 // This might become configurable in the future.
 const remote = "origin"
 
-func includeGitRepositoryDirectory(directory string) bool {
-	currentDir, err := os.Getwd()
+// includeGitRepositoryDirectory returns true if the specified directory
+// should be included in the list of directories to pull.  A directory
+// is included if its branch is one of the branchesOfInterest and if it
+// is behind the remote.
+func includeGitRepositoryDirectory(dir string) bool {
+	_, restoreDir, err := directory.ChangeDirectory(dir)
 	if err != nil {
 		return false
 	}
-	err = os.Chdir(directory)
-	if err != nil {
-		return false
-	}
-	defer func(dir string) {
-		_ = os.Chdir(dir)
-	}(currentDir)
+	defer restoreDir()
 
-	branch := currentBranchName()
+	branch, errBranch := git.CurrentBranchName()
+	if errBranch != nil {
+		return false
+	}
 
 	if !slices.Contains(branchesOfInterest, branch) {
 		return false
 	}
 
-	if !isBehindRemote(branch) {
+	behindRemote, errBehindRemote := git.IsBehindRemote(remote, branch)
+	if !behindRemote || errBehindRemote != nil {
 		return false
 	}
 
 	return true
-}
-
-func currentBranchName() string {
-	cmd := exec.Command("git", "rev-parse", "--abbrev-ref", "HEAD")
-	output, err := cmd.Output()
-	if err != nil || len(output) <= 1 {
-		return ""
-	}
-	return string(output)[:len(output)-1]
-}
-
-func isBehindRemote(branch string) bool {
-	fetchErr := fetch(branch)
-	if fetchErr != nil {
-		return false
-	}
-
-	cmd := exec.Command("git", "rev-list", "--count", branch+".."+remote+"/"+branch)
-	output, err := cmd.Output()
-	if err != nil {
-		return false
-	}
-	return isCommandOutputGreaterThanZero(output)
-}
-
-func fetch(branch string) error {
-	cmd := exec.Command("git", "fetch", remote, branch)
-	return cmd.Run()
-}
-
-func isCommandOutputGreaterThanZero(output []byte) bool {
-	if len(output) <= 1 {
-		return false
-	}
-	value, err := strconv.Atoi(string(output)[:len(output)-1])
-	if err != nil {
-
-	}
-	return value > 0
 }
