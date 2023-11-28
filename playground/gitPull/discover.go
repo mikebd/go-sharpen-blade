@@ -5,6 +5,7 @@ import (
 	"os"
 	"path/filepath"
 	"sync"
+	"sync/atomic"
 )
 
 type includeGitRepositoryDirectoryFunc func(directory string) bool
@@ -33,15 +34,24 @@ func findGitRepositoryDirectories(
 	return result, nil
 }
 
+var logDiagnostics = true
+var count uint32
+
 func findGitRepositoryDirectoriesParallel(
 	parentDirectory string,
 	include includeGitRepositoryDirectoryFunc,
 	wg *sync.WaitGroup,
 	ch chan string,
 ) {
-	log.Println("Entering", parentDirectory)
+	var counter uint32
+	if logDiagnostics {
+		counter = atomic.AddUint32(&count, 1)
+		log.Printf("Entering #%04d %s\n", counter, parentDirectory)
+	}
 	defer func() {
-		log.Println("Leaving", parentDirectory)
+		if logDiagnostics {
+			log.Printf("Leaving  #%04d %s\n", counter, parentDirectory)
+		}
 		wg.Done()
 	}()
 
