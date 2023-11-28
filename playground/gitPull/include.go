@@ -1,8 +1,8 @@
 package gitPull
 
 import (
+	"github.com/mikebd/go-util/pkg/directory"
 	"github.com/mikebd/go-util/pkg/git"
-	"os"
 	"slices"
 )
 
@@ -12,18 +12,16 @@ var branchesOfInterest = []string{"main", "master"}
 // This might become configurable in the future.
 const remote = "origin"
 
-func includeGitRepositoryDirectory(directory string) bool {
-	currentDir, err := os.Getwd()
+// includeGitRepositoryDirectory returns true if the specified directory
+// should be included in the list of directories to pull.  A directory
+// is included if its branch is one of the branchesOfInterest and if it
+// is behind the remote.
+func includeGitRepositoryDirectory(dir string) bool {
+	_, restoreDir, err := directory.ChangeDirectory(dir)
 	if err != nil {
 		return false
 	}
-	err = os.Chdir(directory)
-	if err != nil {
-		return false
-	}
-	defer func(dir string) {
-		_ = os.Chdir(dir)
-	}(currentDir)
+	defer restoreDir()
 
 	branch, errBranch := git.CurrentBranchName()
 	if errBranch != nil {

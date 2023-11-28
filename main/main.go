@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"github.com/mikebd/go-util/pkg/directory"
 	"go-sharpen-blade/command"
 	"go-sharpen-blade/config"
 	"go-sharpen-blade/playground/gitPull"
@@ -35,17 +36,11 @@ func run(args *config.Arguments) error {
 	log.Println("Running:", os.Args)
 
 	if args.WorkingDir != "" {
-		currentDir, err := os.Getwd()
+		_, restoreDir, err := directory.ChangeDirectory(args.WorkingDir)
 		if err != nil {
 			return err
 		}
-		err = os.Chdir(args.WorkingDir)
-		if err != nil {
-			return err
-		}
-		defer func(dir string) {
-			_ = os.Chdir(dir)
-		}(currentDir)
+		defer restoreDir()
 	}
 
 	if args.Command != "" {
