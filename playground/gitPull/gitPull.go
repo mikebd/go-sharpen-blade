@@ -10,7 +10,7 @@ func Register() {
 }
 
 func gitPull() error {
-	directories, err := findGitRepositoryDirectories(".", includeGitRepositoryDirectory)
+	directories, err := findGitRepositoryDirectories(".")
 	if err != nil {
 		return err
 	}

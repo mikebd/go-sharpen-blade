@@ -5,10 +5,8 @@ import (
 	"path/filepath"
 )
 
-type includeGitRepositoryDirectoryFunc func(directory string) bool
-
 // findGitRepositoryDirectories returns a list of directories that contain a Git repository
-func findGitRepositoryDirectories(parentDirectory string, include includeGitRepositoryDirectoryFunc) ([]string, error) {
+func findGitRepositoryDirectories(parentDirectory string) ([]string, error) {
 	var result []string
 
 	dirEntries, err := os.ReadDir(parentDirectory)
@@ -20,11 +18,11 @@ func findGitRepositoryDirectories(parentDirectory string, include includeGitRepo
 			dirName := filepath.Join(parentDirectory, dirEntry.Name())
 			_, err := os.Stat(filepath.Join(dirName, ".git"))
 			if err == nil {
-				if include == nil || include(dirName) {
+				if includeGitRepositoryDirectory(dirName) {
 					result = append(result, dirName)
 				}
 			} else {
-				subDirectories, err := findGitRepositoryDirectories(dirName, include)
+				subDirectories, err := findGitRepositoryDirectories(dirName)
 				if err != nil {
 					return nil, err
 				}
