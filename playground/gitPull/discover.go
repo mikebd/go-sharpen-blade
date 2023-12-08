@@ -7,6 +7,16 @@ import (
 
 // findGitRepositoryDirectories returns a list of directories that contain a Git repository
 func findGitRepositoryDirectories(parentDirectory string) ([]string, error) {
+	result, err := findGitRepositoryDirectoriesCheap(parentDirectory)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return excludeGitRepositoryDirectoriesExpensive(result), nil
+}
+
+func findGitRepositoryDirectoriesCheap(parentDirectory string) ([]string, error) {
 	var result []string
 
 	dirEntries, err := os.ReadDir(parentDirectory)
@@ -18,11 +28,11 @@ func findGitRepositoryDirectories(parentDirectory string) ([]string, error) {
 			dirName := filepath.Join(parentDirectory, dirEntry.Name())
 			_, err := os.Stat(filepath.Join(dirName, ".git"))
 			if err == nil {
-				if includeGitRepositoryDirectory(dirName) {
+				if includeGitRepositoryDirectoryCheap(dirName) {
 					result = append(result, dirName)
 				}
 			} else {
-				subDirectories, err := findGitRepositoryDirectories(dirName)
+				subDirectories, err := findGitRepositoryDirectoriesCheap(dirName)
 				if err != nil {
 					return nil, err
 				}
@@ -32,4 +42,8 @@ func findGitRepositoryDirectories(parentDirectory string) ([]string, error) {
 	}
 
 	return result, nil
+}
+
+func excludeGitRepositoryDirectoriesExpensive(directories []string) []string {
+	return directories
 }

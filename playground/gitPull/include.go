@@ -12,11 +12,12 @@ var branchesOfInterest = []string{"main", "master"}
 // This might become configurable in the future.
 const remote = "origin"
 
-// includeGitRepositoryDirectory returns true if the specified directory
+// includeGitRepositoryDirectoryCheap returns true if the specified directory
 // should be included in the list of directories to pull.  A directory
 // is included if its branch is one of the branchesOfInterest and if it
 // is behind the remote.
-func includeGitRepositoryDirectory(dir string) bool {
+// This function includes only cheap tests that do not require goroutines.
+func includeGitRepositoryDirectoryCheap(dir string) bool {
 	_, restoreDir, err := directory.ChangeDirectory(dir)
 	if err != nil {
 		return false
