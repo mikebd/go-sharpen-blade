@@ -3,6 +3,7 @@ package gitPull
 import (
 	"os"
 	"path/filepath"
+	"sync"
 )
 
 // findGitRepositoryDirectories returns a list of directories that contain a Git repository
@@ -13,7 +14,7 @@ func findGitRepositoryDirectories(parentDirectory string) ([]string, error) {
 		return nil, err
 	}
 
-	return excludeGitRepositoryDirectoriesExpensive(result), nil
+	return excludeGitRepositoryDirectoriesExpensive(parentDirectory, result), nil
 }
 
 func findGitRepositoryDirectoriesCheap(parentDirectory string) ([]string, error) {
@@ -44,6 +45,25 @@ func findGitRepositoryDirectoriesCheap(parentDirectory string) ([]string, error)
 	return result, nil
 }
 
-func excludeGitRepositoryDirectoriesExpensive(directories []string) []string {
-	return directories
+func excludeGitRepositoryDirectoriesExpensive(parentDirectory string, directories []string) []string {
+	excludeDirs := make([]excludeDir, len(directories))
+	var wg sync.WaitGroup
+
+	wg.Add(len(directories))
+	for i, directory := range directories {
+		excludeDirs[i] = excludeDir{directory, true}
+		go excludeGitRepositoryDirectoryExpensive(parentDirectory, excludeDirs, i, &wg)
+	}
+
+	wg.Wait()
+
+	result := make([]string, 0, len(directories))
+
+	for _, excludeDir := range excludeDirs {
+		if !excludeDir.exclude {
+			result = append(result, excludeDir.dir)
+		}
+	}
+
+	return result
 }
