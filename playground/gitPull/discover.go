@@ -27,8 +27,9 @@ func findGitRepositoryDirectoriesCheap(parentDirectory string) ([]string, error)
 	for _, dirEntry := range dirEntries {
 		if dirEntry.IsDir() {
 			dirName := filepath.Join(parentDirectory, dirEntry.Name())
-			_, err := os.Stat(filepath.Join(dirName, ".git"))
-			if err == nil {
+			fileInfo, err := os.Stat(filepath.Join(dirName, ".git"))
+			// TODO: Handle git symbolic links to external git-dir
+			if err == nil && fileInfo.IsDir() {
 				if includeGitRepositoryDirectoryCheap(dirName) {
 					result = append(result, dirName)
 				}

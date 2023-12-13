@@ -1,7 +1,6 @@
 package gitPull
 
 import (
-	"github.com/mikebd/go-util/pkg/directory"
 	"github.com/mikebd/go-util/pkg/git"
 	"slices"
 )
@@ -13,13 +12,8 @@ var branchesOfInterest = []string{"main", "master"}
 // is included if its branch is one of the branchesOfInterest.
 // This function includes only cheap tests that do not require goroutines.
 func includeGitRepositoryDirectoryCheap(dir string) bool {
-	_, restoreDir, err := directory.ChangeDirectory(dir)
-	if err != nil {
-		return false
-	}
-	defer restoreDir()
-
-	branch, errBranch := git.CurrentBranchName()
+	globalOptions := git.GlobalOptions{AsIfIn: dir}
+	branch, errBranch := git.CurrentBranchName(globalOptions)
 	if errBranch != nil {
 		return false
 	}

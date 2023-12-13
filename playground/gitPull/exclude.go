@@ -4,7 +4,6 @@ import (
 	"github.com/mikebd/go-util/pkg/git"
 	"log"
 	"os"
-	"path/filepath"
 	"sync"
 )
 
@@ -19,7 +18,8 @@ type excludeDir struct {
 
 // excludeGitRepositoryDirectoryExpensive returns true if the specified directory
 // should be excluded from the list of directories to pull.  i.e. if it is not
-// behind the remote.
+// behind the remote.  Assumes excludeDirs[index].exclude is true, sets it to false
+// if the repository is behind the remote.
 func excludeGitRepositoryDirectoryExpensive(
 	parentDirectory string,
 	excludeDirs []excludeDir,
@@ -28,28 +28,30 @@ func excludeGitRepositoryDirectoryExpensive(
 ) {
 	defer wg.Done()
 
-	dir := excludeDirs[index].dir
-	err := os.Chdir(filepath.Join(parentDirectory, dir))
-	if err != nil {
-		log.Println("[errChdir] Done with", dir, err)
-		return
-	}
-	log.Println("chdir", dir)
+	pwd, _ := os.Getwd()
+	log.Println("pwd", pwd)
 
-	branch, errBranch := git.CurrentBranchName()
+	dir := excludeDirs[index].dir
+	globalOptions := git.GlobalOptions{AsIfIn: dir}
+
+	branch, errBranch := git.CurrentBranchName(globalOptions)
 	if errBranch != nil {
 		log.Println("[errBranch] Done with", dir, errBranch)
 		return
 	}
-	log.Println("branch", dir)
 
-	behindRemote, errBehindRemote := git.IsBehindRemote(remote, branch)
+	errFetch := git.Fetch(remote, branch, globalOptions)
+	if errFetch != nil {
+		log.Println("[errFetch] Done with", dir, errFetch)
+		return
+	}
+
+	behindRemote, errBehindRemote := git.IsBehindRemote(remote, branch, globalOptions)
 	if !behindRemote || errBehindRemote != nil {
-		log.Println("[!behind || errBehind] Done with", dir)
+		log.Println("[!behind || errBehind] Done with", dir, "behindRemote", behindRemote, "errBehindRemote", errBehindRemote)
 		return
 	}
 	log.Println("behind", dir)
 
-	log.Println("[end] Done with", dir)
 	excludeDirs[index].exclude = false
 }
