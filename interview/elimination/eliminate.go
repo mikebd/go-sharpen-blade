@@ -2,23 +2,43 @@ package elimination
 
 func eliminate(board [][]uint8) [][]uint8 {
 	result := make([][]uint8, len(board))
-	for i := range board {
-		boardRow := board[i]
-		result[i] = make([]uint8, len(boardRow))
-		copy(result[i], boardRow)
 
+	var twoAbove, oneAbove []uint8
+	for rowIndex := range board {
+		boardRow := board[rowIndex]
+		result[rowIndex] = make([]uint8, len(boardRow))
+		copy(result[rowIndex], boardRow)
+
+		if rowIndex == 0 {
+			twoAbove = make([]uint8, len(boardRow))
+			oneAbove = make([]uint8, len(boardRow))
+		}
 		twoBefore, oneBefore := uint8(0), uint8(0)
-		for index, value := range boardRow {
+		for colIndex, value := range boardRow {
 			switch {
-			case index == 0:
+			case rowIndex == 0:
+				twoAbove[colIndex] = value
+			case rowIndex == 1:
+				oneAbove[colIndex] = value
+			default:
+				if twoAbove[colIndex] == value && oneAbove[colIndex] == value {
+					result[rowIndex-2][colIndex] = 0
+					result[rowIndex-1][colIndex] = 0
+					result[rowIndex][colIndex] = 0
+				}
+				twoAbove[colIndex] = oneAbove[colIndex]
+				oneAbove[colIndex] = value
+			}
+			switch {
+			case colIndex == 0:
 				twoBefore = value
-			case index == 1:
+			case colIndex == 1:
 				oneBefore = value
 			default:
-				if twoBefore == oneBefore && oneBefore == value {
-					result[i][index-2] = 0
-					result[i][index-1] = 0
-					result[i][index] = 0
+				if twoBefore == value && oneBefore == value {
+					result[rowIndex][colIndex-2] = 0
+					result[rowIndex][colIndex-1] = 0
+					result[rowIndex][colIndex] = 0
 				}
 				twoBefore = oneBefore
 				oneBefore = value
