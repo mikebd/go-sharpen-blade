@@ -45,7 +45,13 @@ func create(initialValues [size]string) board {
 			case nineInitialValue:
 				val = nine
 			}
-			board[row][col] = cell{row, col, val, val}
+			board.rows[row][col] = cell{row, col, val, val}
+		}
+	}
+
+	for col := 0; col < size; col++ {
+		for row := 0; row < size; row++ {
+			board.cols[col][row] = &board.rows[row][col]
 		}
 	}
 
