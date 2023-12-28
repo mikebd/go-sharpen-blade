@@ -51,7 +51,9 @@ func create(initialValues [size]string) board {
 
 	for col := 0; col < size; col++ {
 		for row := 0; row < size; row++ {
-			board.cols[col][row] = &board.rows[row][col]
+			cell := &board.rows[row][col]
+			board.cols[col][row] = cell
+			board.section(row, col)[offsetWithinSection(row, col)] = cell
 		}
 	}
 

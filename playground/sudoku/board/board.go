@@ -45,5 +45,5 @@ type sct [size]*cell
 type board struct {
 	rows [size]row
 	cols [size]col
-	// scts [size]sct
+	scts [size]sct
 }
