@@ -15,9 +15,9 @@ var sctSize = func() int {
 	return intSctSize
 }()
 
-func (board *board) section(row, col int) *sct {
+func (board *board) section(row, col int) sct {
 	sectionOffset := col/sctSize + (row/sctSize)*sctSize
-	return &board.scts[sectionOffset]
+	return board.scts[sectionOffset]
 }
 
 func offsetWithinSection(row, col int) int {

@@ -16,12 +16,13 @@ const (
 func create(initialValues [size]string) board {
 	board := board{}
 
-	for row := 0; row < size; row++ {
-		rowValues := initialValues[row]
-		for col := 0; col < size; col++ {
+	for rowOffset := 0; rowOffset < size; rowOffset++ {
+		rowValues := initialValues[rowOffset]
+		board.rows[rowOffset] = make(row, size)
+		for colOffset := 0; colOffset < size; colOffset++ {
 			cellValue := emptyInitialValue
-			if col < len(rowValues) {
-				cellValue = rune(rowValues[col])
+			if colOffset < len(rowValues) {
+				cellValue = rune(rowValues[colOffset])
 			}
 
 			val := empty
@@ -45,15 +46,20 @@ func create(initialValues [size]string) board {
 			case nineInitialValue:
 				val = nine
 			}
-			board.rows[row][col] = cell{row, col, val, val}
+			board.rows[rowOffset][colOffset] = cell{rowOffset, colOffset, val, val}
 		}
 	}
 
-	for col := 0; col < size; col++ {
-		for row := 0; row < size; row++ {
-			cell := &board.rows[row][col]
-			board.cols[col][row] = cell
-			board.section(row, col)[offsetWithinSection(row, col)] = cell
+	for sctOffset := 0; sctOffset < size; sctOffset++ {
+		board.scts[sctOffset] = make(sct, size)
+	}
+
+	for colOffset := 0; colOffset < size; colOffset++ {
+		board.cols[colOffset] = make(col, size)
+		for rowOffset := 0; rowOffset < size; rowOffset++ {
+			cell := &board.rows[rowOffset][colOffset]
+			board.cols[colOffset][rowOffset] = cell
+			board.section(rowOffset, colOffset)[offsetWithinSection(rowOffset, colOffset)] = cell
 		}
 	}
 
