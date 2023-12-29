@@ -21,6 +21,27 @@ func Example_board_validate_valid() {
 	// false
 }
 
+var correctCompletedBoard = create([size]string{
+	"534678912",
+	"672195348",
+	"198342567",
+	"859761423",
+	"426853791",
+	"713924856",
+	"961537284",
+	"287419635",
+	"345286179",
+})
+
+func Example_board_validate_correctCompletedBoard() {
+	invalid := correctCompletedBoard.validate()
+
+	fmt.Println(invalid.any())
+
+	// Output:
+	// false
+}
+
 func Test_board_validate_invalid(t *testing.T) {
 	type setValueArgs struct {
 		row, col int
