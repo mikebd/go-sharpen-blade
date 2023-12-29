@@ -40,7 +40,7 @@ func (board *board) validate() invalid {
 func invalidCells(cells cellPointers) bool {
 	cellValue := func(cell *cell) value {
 		if cell == nil {
-			return empty
+			return nilValue
 		}
 		return cell.value
 	}

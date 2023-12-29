@@ -31,3 +31,15 @@ type cell struct {
 // An update to a cell in one dimension will be reflected in all of the
 // other dimensions.
 type cellPointers []*cell
+
+// empty returns true if the cell is empty.
+func (cell *cell) empty() bool {
+	return cell.value == empty
+}
+
+// setValue sets the value of the cell and returns the previous value.
+func (cell *cell) setValue(value value) value {
+	previousValue := cell.value
+	cell.value = value
+	return previousValue
+}
