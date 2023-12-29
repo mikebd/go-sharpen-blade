@@ -8,7 +8,7 @@ import (
 func Example_board_validate_valid() {
 	board := create([size]string{})
 
-	err := board.setValue(0, 0, one)
+	_, err := board.setValue(0, 0, one)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -69,7 +69,7 @@ func Test_board_validate_invalid(t *testing.T) {
 			board := create([size]string{})
 
 			for _, setValueArgs := range tt.args.setValueArgs {
-				err := board.setValue(setValueArgs.row, setValueArgs.col, setValueArgs.value)
+				_, err := board.setValue(setValueArgs.row, setValueArgs.col, setValueArgs.value)
 				if err != nil {
 					t.Error(err)
 				}

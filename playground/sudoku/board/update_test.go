@@ -5,7 +5,7 @@ import "fmt"
 func Example_board_setValue() {
 	board := create([size]string{})
 
-	err := board.setValue(0, 0, one)
+	_, err := board.setValue(0, 0, one)
 	if err != nil {
 		fmt.Println(err)
 	} else {

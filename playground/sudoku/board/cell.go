@@ -16,6 +16,7 @@ const (
 	eight
 	nine
 	// Add more values here to support larger boards
+	nilValue value = 255 // used to indicate an invalid value
 )
 
 // cell is a single cell in a board.
