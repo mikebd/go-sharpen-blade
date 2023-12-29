@@ -36,11 +36,29 @@ func Test_board_validate_invalid(t *testing.T) {
 		args args
 	}{
 		{
-			"invalid row - duplicate value",
+			"duplicate value - row",
 			args{
 				[]setValueArgs{
 					{0, 0, one},
-					{0, 1, one},
+					{0, 8, one},
+				},
+			},
+		},
+		{
+			"duplicate value - column",
+			args{
+				[]setValueArgs{
+					{0, 0, one},
+					{8, 0, one},
+				},
+			},
+		},
+		{
+			"duplicate value - section",
+			args{
+				[]setValueArgs{
+					{0, 0, one},
+					{1, 1, one},
 				},
 			},
 		},
