@@ -15,23 +15,23 @@ func (invalid *invalid) any() bool {
 func (board *board) validate() invalid {
 	result := invalid{}
 
-	lop.ForEach([]cellPointersArray{board.rows}, func(cells cellPointersArray, row int) {
-		if invalidCells(cells) {
-			result.rows = append(result.rows, row)
-		}
-	})
+	type args struct {
+		cells       cellPointersArray
+		resultField []int
+	}
 
-	lop.ForEach([]cellPointersArray{board.cols}, func(cells cellPointersArray, col int) {
-		if invalidCells(cells) {
-			result.cols = append(result.cols, col)
-		}
-	})
-
-	lop.ForEach([]cellPointersArray{board.scts}, func(cells cellPointersArray, sct int) {
-		if invalidCells(cells) {
-			result.scts = append(result.scts, sct)
-		}
-	})
+	lop.ForEach([]args{
+		{board.rows, result.rows},
+		{board.cols, result.cols},
+		{board.scts, result.scts},
+	},
+		func(args args, _ int) {
+			lop.ForEach([]cellPointersArray{args.cells}, func(cells cellPointersArray, col int) {
+				if invalidCells(cells) {
+					args.resultField = append(args.resultField, col)
+				}
+			})
+		})
 
 	return result
 }
