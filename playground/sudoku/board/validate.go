@@ -5,16 +5,16 @@ import (
 	lop "github.com/samber/lo/parallel"
 )
 
-type invalid struct {
+type Invalid struct {
 	rows, cols, scts []int
 }
 
-func (invalid *invalid) any() bool {
+func (invalid *Invalid) Any() bool {
 	return invalid.rows != nil || invalid.cols != nil || invalid.scts != nil
 }
 
-func (board *Board) validate() invalid {
-	result := invalid{}
+func (board *Board) Validate() Invalid {
+	result := Invalid{}
 
 	type args struct {
 		cells       cellPointersArray

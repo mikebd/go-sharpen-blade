@@ -13,9 +13,9 @@ func Example_board_validate_valid() {
 		fmt.Println(err)
 	}
 
-	invalid := board.validate()
+	invalid := board.Validate()
 
-	fmt.Println(invalid.any())
+	fmt.Println(invalid.Any())
 
 	// Output:
 	// false
@@ -34,9 +34,9 @@ var correctCompletedBoard = create([size]string{
 })
 
 func Example_board_validate_correctCompletedBoard() {
-	invalid := correctCompletedBoard.validate()
+	invalid := correctCompletedBoard.Validate()
 
-	fmt.Println(invalid.any())
+	fmt.Println(invalid.Any())
 
 	// Output:
 	// false
@@ -96,10 +96,10 @@ func Test_board_validate_invalid(t *testing.T) {
 				}
 			}
 
-			invalid := board.validate()
+			invalid := board.Validate()
 
-			if !invalid.any() {
-				t.Error("expected invalid.any() to be true")
+			if !invalid.Any() {
+				t.Error("expected Invalid.Any() to be true")
 			}
 		})
 	}
