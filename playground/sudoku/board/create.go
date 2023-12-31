@@ -13,8 +13,8 @@ const (
 	nineInitialValue  rune = '9'
 )
 
-func create(initialValues [size]string) board {
-	board := board{}
+func create(initialValues [size]string) Board {
+	board := Board{}
 
 	for row := 0; row < size; row++ {
 		rowValues := initialValues[row]

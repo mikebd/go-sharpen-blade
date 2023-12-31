@@ -19,7 +19,7 @@ const (
 	nilValue value = 255 // used to indicate an invalid value
 )
 
-// cell is a single cell in a board.
+// cell is a single cell in a Board.
 type cell struct {
 	row, col     int
 	value        value
@@ -27,7 +27,7 @@ type cell struct {
 }
 
 // cellPointers is a slice of pointers to cells.  It allows navigation of
-// the board by multiple dimensions (e.g. row, column, section).
+// the Board by multiple dimensions (e.g. row, column, section).
 // An update to a cell in one dimension will be reflected in all of the
 // other dimensions.
 type cellPointers []*cell

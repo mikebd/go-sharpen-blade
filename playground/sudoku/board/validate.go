@@ -13,7 +13,7 @@ func (invalid *invalid) any() bool {
 	return invalid.rows != nil || invalid.cols != nil || invalid.scts != nil
 }
 
-func (board *board) validate() invalid {
+func (board *Board) validate() invalid {
 	result := invalid{}
 
 	type args struct {

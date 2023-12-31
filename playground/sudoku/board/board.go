@@ -7,8 +7,8 @@ const size int = 9
 
 type cellPointersArray [size]cellPointers
 
-// board has cell accessors
-type board struct {
+// Board has cell accessors
+type Board struct {
 	// rows is an array of horizontal rows of cells, the 0th cell is the leftmost cell.
 	rows cellPointersArray
 

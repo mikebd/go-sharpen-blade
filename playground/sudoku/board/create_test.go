@@ -12,12 +12,12 @@ func Test_create(t *testing.T) {
 	tests := []struct {
 		name string
 		args args
-		want board
+		want Board
 	}{
 		{
-			name: "empty board",
+			name: "empty Board",
 			args: args{[size]string{}},
-			want: board{
+			want: Board{
 				rows: cellPointersArray{
 					{
 						&cell{0, 0, empty, empty},
@@ -311,7 +311,7 @@ func Test_create(t *testing.T) {
 				"  4  5  6",
 				"  7  8  9",
 			}},
-			want: board{
+			want: Board{
 				rows: cellPointersArray{
 					{
 						&cell{0, 0, one, one},
