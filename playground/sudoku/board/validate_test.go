@@ -6,7 +6,7 @@ import (
 )
 
 func Example_board_validate_valid() {
-	board := create([size]string{})
+	board := createEmptyBoard()
 
 	_, err := board.setValue(0, 0, one)
 	if err != nil {
@@ -21,17 +21,25 @@ func Example_board_validate_valid() {
 	// false
 }
 
-var correctCompletedBoard = create([size]string{
-	"534678912",
-	"672195348",
-	"198342567",
-	"859761423",
-	"426853791",
-	"713924856",
-	"961537284",
-	"287419635",
-	"345286179",
-})
+var correctCompletedBoard = func() *Board {
+	board, err := create([size]string{
+		"534678912",
+		"672195348",
+		"198342567",
+		"859761423",
+		"426853791",
+		"713924856",
+		"961537284",
+		"287419635",
+		"345286179",
+	})
+
+	if err != nil {
+		panic(err)
+	}
+
+	return board
+}()
 
 func Example_board_validate_correctCompletedBoard() {
 	invalid := correctCompletedBoard.Validate()
@@ -87,7 +95,7 @@ func Test_board_validate_invalid(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			board := create([size]string{})
+			board := createEmptyBoard()
 
 			for _, setValueArgs := range tt.args.setValueArgs {
 				_, err := board.setValue(setValueArgs.row, setValueArgs.col, setValueArgs.value)

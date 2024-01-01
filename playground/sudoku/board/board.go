@@ -20,3 +20,8 @@ type Board struct {
 	// The (size-1)th cell is the bottom right cell.
 	scts cellPointersArray
 }
+
+// Size returns the number of cells in a row, column, or section.
+func (board *Board) Size() int {
+	return len(board.rows)
+}

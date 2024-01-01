@@ -5,5 +5,5 @@ import (
 )
 
 type game struct {
-	board Board
+	board *Board
 }

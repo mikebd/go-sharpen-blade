@@ -3,7 +3,7 @@ package board
 import "fmt"
 
 func Example_board_setValue() {
-	board := create([size]string{})
+	board := createEmptyBoard()
 
 	_, err := board.setValue(0, 0, one)
 	if err != nil {

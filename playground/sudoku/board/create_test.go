@@ -1,7 +1,6 @@
 package board
 
 import (
-	"reflect"
 	"testing"
 )
 
@@ -597,7 +596,10 @@ func Test_create(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := create(tt.args.initialValues); !reflect.DeepEqual(got, tt.want) {
+			got, err := create(tt.args.initialValues)
+			if err != nil {
+				t.Errorf("create() error = %v", err)
+			} else if !got.equals(&tt.want) {
 				t.Errorf("create() = %v, want %v", got, tt.want)
 			}
 		})
