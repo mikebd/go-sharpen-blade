@@ -1,6 +1,9 @@
 # go-sharpen-blade
 
-Sharpening my Golang skills with coding challenges and skunkworks
+Sharpening my Golang skills with coding challenges and skunkworks.
+
+Some packages are only executed as unit tests, others can be run as commands using the
+`-c <command>` argument.  The `-l` argument will list the available commands.
 
 ## Running in Docker
 
@@ -17,5 +20,8 @@ Sharpening my Golang skills with coding challenges and skunkworks
 
 | Argument         | Description               |
 |------------------|---------------------------|
+| `-c <command>`   | Command to run            |
+| `-d <directory>` | Working directory         |
 | `-h` \| `--help` | Print the help message    |
+| `-l`             | List commands             |
 | `-lt`            | Log with timestamps (UTC) |
