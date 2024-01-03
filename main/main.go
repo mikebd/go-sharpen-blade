@@ -6,6 +6,7 @@ import (
 	"go-sharpen-blade/command"
 	"go-sharpen-blade/config"
 	"go-sharpen-blade/playground/gitPull"
+	sudoku "go-sharpen-blade/playground/sudoku/game"
 	"log"
 	"os"
 	"time"
@@ -13,6 +14,7 @@ import (
 
 func init() {
 	gitPull.Register()
+	sudoku.Register()
 }
 
 func main() {
