@@ -13,7 +13,7 @@ func (invalid *Invalid) Any() bool {
 	return invalid.rows != nil || invalid.cols != nil || invalid.scts != nil
 }
 
-func (board *Board) Validate() Invalid {
+func (board *Board) Validate() *Invalid {
 	result := Invalid{}
 
 	type args struct {
@@ -34,7 +34,7 @@ func (board *Board) Validate() Invalid {
 			})
 		})
 
-	return result
+	return &result
 }
 
 func invalidCells(cells cellPointers) bool {
