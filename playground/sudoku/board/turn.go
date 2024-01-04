@@ -22,7 +22,7 @@ func (board *Board) MakeTurn(turnNumber, row, col int, turnValueRune rune) (game
 		number:        turnNumber,
 		row:           row,
 		col:           col,
-		valid:         invalid.Any(),
+		valid:         !invalid.Any(),
 		previousValue: previousValue.rune(),
 		value:         turnValueRune,
 	}, nil
