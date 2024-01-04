@@ -4,8 +4,6 @@ package turn
 type Turn interface {
 	Number() int
 
-	Error() error
-
 	Valid() bool
 
 	Row() int
