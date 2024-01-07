@@ -1,7 +1,7 @@
 package board
 
 import (
-	game "go-sharpen-blade/playground/sudoku/game/ports"
+	game "go-sharpen-blade/playground/sudoku/game/port"
 )
 
 type turn struct {
