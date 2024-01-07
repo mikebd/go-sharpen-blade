@@ -1,4 +1,4 @@
-package turn
+package ports
 
 // Turn captures a single move made in the game
 type Turn interface {
