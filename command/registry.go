@@ -22,11 +22,3 @@ func List() {
 func Register(name string, command Command) {
 	registry[name] = command
 }
-
-func Run(name string) error {
-	command, ok := registry[name]
-	if !ok {
-		return fmt.Errorf("command not found: %s", name)
-	}
-	return command()
-}

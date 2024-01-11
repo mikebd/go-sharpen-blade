@@ -3,13 +3,20 @@ package main
 import (
 	"flag"
 	"github.com/mikebd/go-util/pkg/directory"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"go-sharpen-blade/command"
 	"go-sharpen-blade/config"
 	"go-sharpen-blade/playground/gitPull"
 	sudoku "go-sharpen-blade/playground/sudoku/game"
 	"log"
+	"net/http"
 	"os"
 	"time"
+)
+
+const (
+	prometheusPath = "/metrics"
+	prometheusPort = ":2112"
 )
 
 func init() {
@@ -46,10 +53,19 @@ func run(args *config.Arguments) error {
 	}
 
 	if args.Command != "" {
+		go func() {
+			http.Handle(prometheusPath, promhttp.Handler())
+			_ = http.ListenAndServe(prometheusPort, nil)
+		}()
 		err := command.Run(args.Command)
 		if err != nil {
 			return err
 		}
+
+		// Consider making this delay configurable
+		prometheusDelaySeconds := 20
+		log.Printf("Waiting %d seconds for Prometheus to scrape before exiting...\n", prometheusDelaySeconds)
+		time.Sleep(time.Duration(prometheusDelaySeconds) * time.Second)
 	}
 
 	return nil

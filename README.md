@@ -25,3 +25,18 @@ Some packages are only executed as unit tests, others can be run as commands usi
 | `-h` \| `--help` | Print the help message    |
 | `-l`             | List commands             |
 | `-lt`            | Log with timestamps (UTC) |
+
+## Prometheus Metrics
+
+When run with `-c <command>`, prometheus metrics are exposed on `:2112/metrics`.
+The program will wait for 20 seconds before exiting, so that the metrics can be scraped.
+
+`prometheus.yml`:
+```yaml
+scrape_configs:
+  - job_name: sharpen_blade
+    scrape_interval: 10s
+    static_configs:
+      - targets:
+        - localhost:2112
+```
