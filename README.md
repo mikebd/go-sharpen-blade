@@ -18,17 +18,18 @@ Some packages are only executed as unit tests, others can be run as commands usi
 
 ## Arguments
 
-| Argument         | Description               |
-|------------------|---------------------------|
-| `-c <command>`   | Command to run            |
-| `-d <directory>` | Working directory         |
-| `-h` \| `--help` | Print the help message    |
-| `-l`             | List commands             |
-| `-lt`            | Log with timestamps (UTC) |
+| Argument           | Description               |
+|--------------------|---------------------------|
+| `-c <command>`     | Command to run            |
+| `-d <directory>`   | Working directory         |
+| `-h` \| `--help`   | Print the help message    |
+| `-l`               | List commands             |
+| `-lt`              | Log with timestamps (UTC) |
+| `-o11y-prometheus` | Enable Prometheus metrics |
 
 ## Prometheus Metrics
 
-When run with `-c <command>`, prometheus metrics are exposed on `:2112/metrics`.
+When run with `-o11y-prometheus -c <command>`, prometheus metrics are exposed on `:2112/metrics`.
 The program will wait for 20 seconds before exiting, so that the metrics can be scraped.
 
 `prometheus.yml`:

@@ -53,19 +53,23 @@ func run(args *config.Arguments) error {
 	}
 
 	if args.Command != "" {
-		go func() {
-			http.Handle(prometheusPath, promhttp.Handler())
-			_ = http.ListenAndServe(prometheusPort, nil)
-		}()
-		err := command.Run(args.Command)
+		if args.O11yPrometheus {
+			go func() {
+				http.Handle(prometheusPath, promhttp.Handler())
+				_ = http.ListenAndServe(prometheusPort, nil)
+			}()
+		}
+		err := command.Run(args.Command, args.O11yPrometheus)
 		if err != nil {
 			return err
 		}
 
-		// Consider making this delay configurable
-		prometheusDelaySeconds := 20
-		log.Printf("Waiting %d seconds for Prometheus to scrape before exiting...\n", prometheusDelaySeconds)
-		time.Sleep(time.Duration(prometheusDelaySeconds) * time.Second)
+		if args.O11yPrometheus {
+			// Consider making this delay configurable
+			prometheusDelaySeconds := 20
+			log.Printf("Waiting %d seconds for Prometheus to scrape before exiting...\n", prometheusDelaySeconds)
+			time.Sleep(time.Duration(prometheusDelaySeconds) * time.Second)
+		}
 	}
 
 	return nil

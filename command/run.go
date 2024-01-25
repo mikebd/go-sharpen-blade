@@ -18,11 +18,13 @@ var (
 	}, []string{labelCommand})
 )
 
-func Run(name string) error {
+func Run(name string, o11yPrometheus bool) error {
 	command, ok := registry[name]
 	if !ok {
 		return fmt.Errorf("command not found: %s", name)
 	}
-	commandRun.With(prometheus.Labels{labelCommand: name}).Inc()
+	if o11yPrometheus {
+		commandRun.With(prometheus.Labels{labelCommand: name}).Inc()
+	}
 	return command()
 }
