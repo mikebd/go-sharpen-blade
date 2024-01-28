@@ -4,11 +4,13 @@ import (
 	"go-sharpen-blade/command"
 	. "go-sharpen-blade/playground/sudoku/board"
 	"go-sharpen-blade/playground/sudoku/game/port"
+	"go-sharpen-blade/playground/sudoku/ui/cli"
 )
 
 type game struct {
-	board *Board
-	turns []*port.Turn
+	board    *Board
+	renderer port.Renderer
+	turns    []*port.Turn
 }
 
 func Register() {
@@ -16,8 +18,9 @@ func Register() {
 }
 
 func newGame() error {
-	game := &game{
-		board: GenerateBoard(),
+	game := game{
+		board:    GenerateBoard(),
+		renderer: &cli.Console{},
 	}
 
 	return game.play()
