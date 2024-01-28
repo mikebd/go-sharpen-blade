@@ -10,7 +10,7 @@ const (
 )
 
 func maxProduct(s string) int {
-	return nestedSolution(s)
+	return slidingWindowSolution(s)
 }
 
 // nestedSolution is the least efficient solution.  I used a sliding window
@@ -26,6 +26,32 @@ func nestedSolution(s string) int {
 			maxProduct = product
 		}
 	}
+	return maxProduct
+}
+
+func slidingWindowSolution(s string) int {
+	maxProduct := 0
+	product := 1
+	for i := 0; i < consecutiveDigits; i++ {
+		product *= stringRuneToDecimal(s, i)
+	}
+	maxProduct = product
+
+	for i := consecutiveDigits; i < len(s); i++ {
+		if product == 0 {
+			product = 1
+			for j := i - consecutiveDigits + 1; j < i; j++ {
+				product *= stringRuneToDecimal(s, j)
+			}
+		} else {
+			product /= stringRuneToDecimal(s, i-consecutiveDigits)
+		}
+		product *= stringRuneToDecimal(s, i)
+		if product > maxProduct {
+			maxProduct = product
+		}
+	}
+
 	return maxProduct
 }
 
