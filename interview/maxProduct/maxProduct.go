@@ -18,10 +18,7 @@ func maxProduct(s string) int {
 func nestedSolution(s string) int {
 	maxProduct := 0
 	for i := 0; i <= len(s)-consecutiveDigits; i++ {
-		product := 1
-		for j := i; j < i+consecutiveDigits; j++ {
-			product *= stringRuneToDecimal(s, j)
-		}
+		product := calcProduct(s, i, i+consecutiveDigits)
 		if product > maxProduct {
 			maxProduct = product
 		}
@@ -31,18 +28,12 @@ func nestedSolution(s string) int {
 
 func slidingWindowSolution(s string) int {
 	maxProduct := 0
-	product := 1
-	for i := 0; i < consecutiveDigits; i++ {
-		product *= stringRuneToDecimal(s, i)
-	}
+	product := calcProduct(s, 0, consecutiveDigits)
 	maxProduct = product
 
 	for i := consecutiveDigits; i < len(s); i++ {
 		if product == 0 {
-			product = 1
-			for j := i - consecutiveDigits + 1; j < i; j++ {
-				product *= stringRuneToDecimal(s, j)
-			}
+			product = calcProduct(s, i-consecutiveDigits+1, i)
 		} else {
 			product /= stringRuneToDecimal(s, i-consecutiveDigits)
 		}
@@ -53,6 +44,16 @@ func slidingWindowSolution(s string) int {
 	}
 
 	return maxProduct
+}
+
+// product returns the decimal integer product of the string runes
+// between start and end-1
+func calcProduct(s string, start, end int) int {
+	product := 1
+	for i := start; i < end; i++ {
+		product *= stringRuneToDecimal(s, i)
+	}
+	return product
 }
 
 // stringRuneToInt converts a string rune to a decimal integer or 0 if invalid

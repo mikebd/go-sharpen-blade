@@ -18,8 +18,11 @@ func Test_maxProduct(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := maxProduct(tt.args.s); got != tt.want {
-				t.Errorf("maxProduct() = %v, want %v", got, tt.want)
+			if got := nestedSolution(tt.args.s); got != tt.want {
+				t.Errorf("nestedSolution() = %v, want %v", got, tt.want)
+			}
+			if got := slidingWindowSolution(tt.args.s); got != tt.want {
+				t.Errorf("slidingWindowSolution() = %v, want %v", got, tt.want)
 			}
 		})
 	}
