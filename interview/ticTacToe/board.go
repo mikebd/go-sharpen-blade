@@ -7,11 +7,13 @@ const (
 	boardO     rune = 'O'
 	boardX     rune = 'X'
 
-	fewestTurnsToWin int = 5
+	rowSize          int = 3
+	boardSize        int = rowSize * rowSize
+	fewestTurnsToWin int = rowSize*2 - 1
 )
 
 type board struct {
-	cells  [3][3]rune
+	cells  [rowSize][rowSize]rune
 	countO int
 	countX int
 }
@@ -20,7 +22,7 @@ type board struct {
 // The return value is an empty string if the board was loaded successfully.  Otherwise, it is a result... constant.
 func (b *board) load(input string) string {
 	cells := strings.Split(input, ",")
-	if len(cells) > 9 {
+	if len(cells) > boardSize {
 		return resultError
 	}
 
@@ -30,7 +32,7 @@ func (b *board) load(input string) string {
 			return errorString
 		}
 
-		b.cells[i/3][i%3] = boardRune
+		b.cells[i/rowSize][i%rowSize] = boardRune
 		if boardRune == boardO {
 			b.countO++
 		}
