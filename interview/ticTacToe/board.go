@@ -6,6 +6,8 @@ const (
 	boardEmpty rune = 0
 	boardO     rune = 'O'
 	boardX     rune = 'X'
+
+	fewestTurnsToWin int = 5
 )
 
 type board [3][3]rune
@@ -35,6 +37,10 @@ func (b *board) load(input string) string {
 
 	if countO > countX+1 || countX > countO+1 {
 		return resultError
+	}
+
+	if countO+countX < fewestTurnsToWin {
+		return resultInsufficientData
 	}
 
 	return ""

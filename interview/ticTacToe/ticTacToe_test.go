@@ -9,33 +9,6 @@ func Test_board_loadSuccess(t *testing.T) {
 		wantBoard board
 	}{
 		{
-			name:  "explicit empty board 1",
-			input: ",,,,,,,,",
-			wantBoard: board{
-				{boardEmpty, boardEmpty, boardEmpty},
-				{boardEmpty, boardEmpty, boardEmpty},
-				{boardEmpty, boardEmpty, boardEmpty},
-			},
-		},
-		{
-			name:  "explicit empty board 2",
-			input: " , , , , , , , , ",
-			wantBoard: board{
-				{boardEmpty, boardEmpty, boardEmpty},
-				{boardEmpty, boardEmpty, boardEmpty},
-				{boardEmpty, boardEmpty, boardEmpty},
-			},
-		},
-		{
-			name:  "implicit empty board",
-			input: "",
-			wantBoard: board{
-				{boardEmpty, boardEmpty, boardEmpty},
-				{boardEmpty, boardEmpty, boardEmpty},
-				{boardEmpty, boardEmpty, boardEmpty},
-			},
-		},
-		{
 			name:  "full board",
 			input: "x,o,x,o,x,o,x,o,x",
 			wantBoard: board{
@@ -78,6 +51,50 @@ func Test_board_loadError(t *testing.T) {
 			b := board{}
 			if got := b.load(tt.input); got != resultError {
 				t.Errorf("load() = '%v', want '%v'", got, resultError)
+			}
+		})
+	}
+}
+
+func Test_board_loadInsufficientData(t *testing.T) {
+	tests := []struct {
+		name  string
+		input string
+	}{
+		{
+			name:  "explicit empty board 1",
+			input: ",,,,,,,,",
+		},
+		{
+			name:  "explicit empty board 2",
+			input: " , , , , , , , , ",
+		},
+		{
+			name:  "implicit empty board",
+			input: "",
+		},
+		{
+			name:  "one cell",
+			input: "x,,,,,,,,",
+		},
+		{
+			name:  "two cells",
+			input: "x,o,,,,,,,",
+		},
+		{
+			name:  "three cells",
+			input: "x,o,x,,,,,,",
+		},
+		{
+			name:  "four cells",
+			input: "x,o,x,o,,,,,",
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			b := board{}
+			if got := b.load(tt.input); got != resultInsufficientData {
+				t.Errorf("load() = '%v', want '%v'", got, resultInsufficientData)
 			}
 		})
 	}
