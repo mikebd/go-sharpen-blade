@@ -17,15 +17,25 @@ func (b *board) load(input string) string {
 	if len(cells) > 9 {
 		return resultError
 	}
+
+	countO, countX := 0, 0
 	for i, cellString := range cells {
 		boardRune, errorString := b.cellStringToBoardRune(cellString)
+		if boardRune == boardO {
+			countO++
+		}
+		if boardRune == boardX {
+			countX++
+		}
 		if len(errorString) > 0 {
 			return errorString
 		}
 		b[i/3][i%3] = boardRune
 	}
 
-	// TODO: Error if there are too many Xs or Os
+	if countO > countX+1 || countX > countO+1 {
+		return resultError
+	}
 
 	return ""
 }
