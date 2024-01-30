@@ -35,6 +35,15 @@ func Test_board_loadSuccess(t *testing.T) {
 				{boardEmpty, boardEmpty, boardEmpty},
 			},
 		},
+		{
+			name:  "full board",
+			input: "x,o,x,o,x,o,x,o,x",
+			wantBoard: board{
+				{boardX, boardO, boardX},
+				{boardO, boardX, boardO},
+				{boardX, boardO, boardX},
+			},
+		},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
