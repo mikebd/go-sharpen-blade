@@ -26,16 +26,17 @@ func (b *board) load(input string) string {
 
 	for i, cellString := range cells {
 		boardRune, errorString := b.cellStringToBoardRune(cellString)
+		if len(errorString) > 0 {
+			return errorString
+		}
+
+		b.cells[i/3][i%3] = boardRune
 		if boardRune == boardO {
 			b.countO++
 		}
 		if boardRune == boardX {
 			b.countX++
 		}
-		if len(errorString) > 0 {
-			return errorString
-		}
-		b.cells[i/3][i%3] = boardRune
 	}
 
 	if b.countO > b.countX+1 || b.countX > b.countO+1 {
