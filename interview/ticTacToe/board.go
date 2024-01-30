@@ -10,7 +10,11 @@ const (
 	fewestTurnsToWin int = 5
 )
 
-type board [3][3]rune
+type board struct {
+	cells  [3][3]rune
+	countO int
+	countX int
+}
 
 // loadBoard takes a string representing a tic-tac-toe board and loads it into the board.
 // The return value is an empty string if the board was loaded successfully.  Otherwise, it is a result... constant.
@@ -20,26 +24,25 @@ func (b *board) load(input string) string {
 		return resultError
 	}
 
-	countO, countX := 0, 0
 	for i, cellString := range cells {
 		boardRune, errorString := b.cellStringToBoardRune(cellString)
 		if boardRune == boardO {
-			countO++
+			b.countO++
 		}
 		if boardRune == boardX {
-			countX++
+			b.countX++
 		}
 		if len(errorString) > 0 {
 			return errorString
 		}
-		b[i/3][i%3] = boardRune
+		b.cells[i/3][i%3] = boardRune
 	}
 
-	if countO > countX+1 || countX > countO+1 {
+	if b.countO > b.countX+1 || b.countX > b.countO+1 {
 		return resultError
 	}
 
-	if countO+countX < fewestTurnsToWin {
+	if b.countO+b.countX < fewestTurnsToWin {
 		return resultInsufficientData
 	}
 

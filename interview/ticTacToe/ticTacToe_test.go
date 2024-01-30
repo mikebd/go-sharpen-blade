@@ -12,9 +12,13 @@ func Test_board_loadSuccess(t *testing.T) {
 			name:  "full board",
 			input: "x,o,x,o,x,o,x,o,x",
 			wantBoard: board{
-				{boardX, boardO, boardX},
-				{boardO, boardX, boardO},
-				{boardX, boardO, boardX},
+				cells: [3][3]rune{
+					{boardX, boardO, boardX},
+					{boardO, boardX, boardO},
+					{boardX, boardO, boardX},
+				},
+				countO: 4,
+				countX: 5,
 			},
 		},
 	}
@@ -23,6 +27,9 @@ func Test_board_loadSuccess(t *testing.T) {
 			b := board{}
 			if got := b.load(tt.input); got != "" {
 				t.Errorf("load() = '%v', want no error", got)
+			}
+			if b != tt.wantBoard {
+				t.Errorf("load() = '%v', want '%v'", b, tt.wantBoard)
 			}
 		})
 	}
@@ -58,36 +65,52 @@ func Test_board_loadError(t *testing.T) {
 
 func Test_board_loadInsufficientData(t *testing.T) {
 	tests := []struct {
-		name  string
-		input string
+		name       string
+		input      string
+		wantCountO int
+		wantCountX int
 	}{
 		{
-			name:  "explicit empty board 1",
-			input: ",,,,,,,,",
+			name:       "explicit empty board 1",
+			input:      ",,,,,,,,",
+			wantCountO: 0,
+			wantCountX: 0,
 		},
 		{
-			name:  "explicit empty board 2",
-			input: " , , , , , , , , ",
+			name:       "explicit empty board 2",
+			input:      " , , , , , , , , ",
+			wantCountO: 0,
+			wantCountX: 0,
 		},
 		{
-			name:  "implicit empty board",
-			input: "",
+			name:       "implicit empty board",
+			input:      "",
+			wantCountO: 0,
+			wantCountX: 0,
 		},
 		{
-			name:  "one cell",
-			input: "x,,,,,,,,",
+			name:       "one cell",
+			input:      "x,,,,,,,,",
+			wantCountO: 0,
+			wantCountX: 1,
 		},
 		{
-			name:  "two cells",
-			input: "x,o,,,,,,,",
+			name:       "two cells",
+			input:      "x,o,,,,,,,",
+			wantCountO: 1,
+			wantCountX: 1,
 		},
 		{
-			name:  "three cells",
-			input: "x,o,x,,,,,,",
+			name:       "three cells",
+			input:      "x,o,x,,,,,,",
+			wantCountO: 1,
+			wantCountX: 2,
 		},
 		{
-			name:  "four cells",
-			input: "x,o,x,o,,,,,",
+			name:       "four cells",
+			input:      "x,o,x,o,,,,,",
+			wantCountO: 2,
+			wantCountX: 2,
 		},
 	}
 	for _, tt := range tests {
@@ -95,6 +118,12 @@ func Test_board_loadInsufficientData(t *testing.T) {
 			b := board{}
 			if got := b.load(tt.input); got != resultInsufficientData {
 				t.Errorf("load() = '%v', want '%v'", got, resultInsufficientData)
+			}
+			if b.countO != tt.wantCountO {
+				t.Errorf("load() wrong countO = '%v', want '%v'", b.countO, tt.wantCountO)
+			}
+			if b.countX != tt.wantCountX {
+				t.Errorf("load() wrong countX = '%v', want '%v'", b.countX, tt.wantCountX)
 			}
 		})
 	}
