@@ -3,6 +3,7 @@ package ticTacToe
 import "testing"
 
 func Test_board_loadSuccess(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		name      string
 		input     string
@@ -36,6 +37,7 @@ func Test_board_loadSuccess(t *testing.T) {
 }
 
 func Test_board_loadError(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		name  string
 		input string
@@ -68,6 +70,7 @@ func Test_board_loadError(t *testing.T) {
 }
 
 func Test_board_loadInsufficientData(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		name       string
 		input      string

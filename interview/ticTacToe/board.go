@@ -1,6 +1,9 @@
 package ticTacToe
 
-import "strings"
+import (
+	"strings"
+	"sync"
+)
 
 const (
 	boardEmpty rune = 0
@@ -54,7 +57,18 @@ func (b *board) hasWon(player rune) bool {
 
 func (b *board) evaluate() string {
 	// For extreme optimization, hasWon() could be modified to test both players at once
-	winO, winX := b.hasWon(boardO), b.hasWon(boardX)
+	winO, winX := false, false
+	var wg sync.WaitGroup
+	wg.Add(2)
+	go func() {
+		winO = b.hasWon(boardO)
+		wg.Done()
+	}()
+	go func() {
+		winX = b.hasWon(boardX)
+		wg.Done()
+	}()
+	wg.Wait()
 
 	switch {
 	case winO && winX:

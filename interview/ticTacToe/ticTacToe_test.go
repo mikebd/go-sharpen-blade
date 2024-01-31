@@ -3,6 +3,7 @@ package ticTacToe
 import "testing"
 
 func Test_ticTacToe(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		name  string
 		input string
