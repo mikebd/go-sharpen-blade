@@ -18,29 +18,19 @@ type board struct {
 	countX int
 }
 
-func (b *board) canWin(player rune) bool {
-	// Horizontal Win?
-	for row := 0; row < rowSize; row++ {
-		countPlayer := 0
-		for col := 0; col < rowSize; col++ {
-			if b.cells[row][col] == player {
-				countPlayer++
+func (b *board) hasWon(player rune) bool {
+	// Horizontal or Vertical Win?
+	for i := 0; i < rowSize; i++ {
+		countPlayerHorizontal, countPlayerVertical := 0, 0
+		for j := 0; j < rowSize; j++ {
+			if b.cells[i][j] == player {
+				countPlayerHorizontal++
+			}
+			if b.cells[j][i] == player {
+				countPlayerVertical++
 			}
 		}
-		if countPlayer == rowSize {
-			return true
-		}
-	}
-
-	// Vertical Win?
-	for col := 0; col < rowSize; col++ {
-		countPlayer := 0
-		for row := 0; row < rowSize; row++ {
-			if b.cells[row][col] == player {
-				countPlayer++
-			}
-		}
-		if countPlayer == rowSize {
+		if countPlayerHorizontal == rowSize || countPlayerVertical == rowSize {
 			return true
 		}
 	}
@@ -65,7 +55,7 @@ func (b *board) canWin(player rune) bool {
 }
 
 func (b *board) evaluate() string {
-	winO, winX := b.canWin(boardO), b.canWin(boardX)
+	winO, winX := b.hasWon(boardO), b.hasWon(boardX)
 
 	switch {
 	case winO && winX:
