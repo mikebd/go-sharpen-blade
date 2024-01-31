@@ -64,6 +64,7 @@ func (b *board) evaluate() string {
 	case winX:
 		return resultXWin
 	case b.countO+b.countX == boardSize:
+		// All cells are filled, but neither player has won.  Eventual ties are not considered.
 		return resultTie
 	default:
 		return resultInsufficientData
