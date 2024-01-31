@@ -19,8 +19,22 @@ type board struct {
 }
 
 func (b *board) hasWon(player rune) bool {
-	// Horizontal or Vertical Win?
+	// Player piece count per diagonal
+	countPlayerTopLeft, countPlayerBottomLeft := 0, 0
+
 	for i := 0; i < rowSize; i++ {
+		// Diagonal win?
+		if b.cells[i][i] == player {
+			countPlayerTopLeft++
+		}
+		if b.cells[i][rowSize-1-i] == player {
+			countPlayerBottomLeft++
+		}
+		if i == rowSize-1 && (countPlayerTopLeft == rowSize || countPlayerBottomLeft == rowSize) {
+			return true
+		}
+
+		// Horizontal or vertical win?
 		countPlayerHorizontal, countPlayerVertical := 0, 0
 		for j := 0; j < rowSize; j++ {
 			if b.cells[i][j] == player {
@@ -35,26 +49,11 @@ func (b *board) hasWon(player rune) bool {
 		}
 	}
 
-	// Diagonal Win?
-	{
-		countPlayerTopLeft, countPlayerBottomLeft := 0, 0
-		for row := 0; row < rowSize; row++ {
-			if b.cells[row][row] == player {
-				countPlayerTopLeft++
-			}
-			if b.cells[row][rowSize-1-row] == player {
-				countPlayerBottomLeft++
-			}
-		}
-		if countPlayerTopLeft == rowSize || countPlayerBottomLeft == rowSize {
-			return true
-		}
-	}
-
 	return false
 }
 
 func (b *board) evaluate() string {
+	// For extreme optimization, hasWon() could be modified to test both players at once
 	winO, winX := b.hasWon(boardO), b.hasWon(boardX)
 
 	switch {
