@@ -45,28 +45,18 @@ func (b *board) canWin(player rune) bool {
 		}
 	}
 
-	// Diagonal Win from top-left?
+	// Diagonal Win?
 	{
-		countPlayer := 0
+		countPlayerTopLeft, countPlayerBottomLeft := 0, 0
 		for row := 0; row < rowSize; row++ {
 			if b.cells[row][row] == player {
-				countPlayer++
+				countPlayerTopLeft++
 			}
-		}
-		if countPlayer == rowSize {
-			return true
-		}
-	}
-
-	// Diagonal Win from bottom-left?
-	{
-		countPlayer := 0
-		for row := 0; row < rowSize; row++ {
 			if b.cells[row][rowSize-1-row] == player {
-				countPlayer++
+				countPlayerBottomLeft++
 			}
 		}
-		if countPlayer == rowSize {
+		if countPlayerTopLeft == rowSize || countPlayerBottomLeft == rowSize {
 			return true
 		}
 	}

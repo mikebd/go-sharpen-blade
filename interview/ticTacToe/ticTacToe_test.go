@@ -14,13 +14,23 @@ func Test_ticTacToe(t *testing.T) {
 			want:  "Tie",
 		},
 		{
-			name:  "O Win",
+			name:  "O Win - vertical",
 			input: "x, O,x,o,o,x,,o,",
 			want:  "O Win",
 		},
 		{
-			name:  "X Win",
+			name:  "X Win - horizontal",
 			input: "x,X,x,o,o",
+			want:  "X Win",
+		},
+		{
+			name:  "X Win - diagonal top-left to bottom-right",
+			input: "x,o,x,o,x,o,,,x",
+			want:  "X Win",
+		},
+		{
+			name:  "X Win - diagonal bottom-left to top-right",
+			input: "x,o,x,o,x,o,x,,",
 			want:  "X Win",
 		},
 	}
