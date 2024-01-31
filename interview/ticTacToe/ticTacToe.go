@@ -4,7 +4,7 @@ const (
 	resultError            = "Error"
 	resultInsufficientData = "Insufficient Data"
 	resultTie              = "Tie"
-	resultWin              = "O Win"
+	resultOWin             = "O Win"
 	resultXWin             = "X Win"
 )
 
@@ -19,5 +19,5 @@ func ticTacToe(input string) string {
 		return result
 	}
 
-	return result
+	return board.evaluate()
 }

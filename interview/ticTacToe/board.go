@@ -18,6 +18,79 @@ type board struct {
 	countX int
 }
 
+func (b *board) canWin(player rune) bool {
+	// Horizontal Win?
+	for row := 0; row < rowSize; row++ {
+		countPlayer := 0
+		for col := 0; col < rowSize; col++ {
+			if b.cells[row][col] == player {
+				countPlayer++
+			}
+		}
+		if countPlayer == rowSize {
+			return true
+		}
+	}
+
+	// Vertical Win?
+	for col := 0; col < rowSize; col++ {
+		countPlayer := 0
+		for row := 0; row < rowSize; row++ {
+			if b.cells[row][col] == player {
+				countPlayer++
+			}
+		}
+		if countPlayer == rowSize {
+			return true
+		}
+	}
+
+	// Diagonal Win from top-left?
+	{
+		countPlayer := 0
+		for row := 0; row < rowSize; row++ {
+			if b.cells[row][row] == player {
+				countPlayer++
+			}
+		}
+		if countPlayer == rowSize {
+			return true
+		}
+	}
+
+	// Diagonal Win from bottom-left?
+	{
+		countPlayer := 0
+		for row := 0; row < rowSize; row++ {
+			if b.cells[row][rowSize-1-row] == player {
+				countPlayer++
+			}
+		}
+		if countPlayer == rowSize {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (b *board) evaluate() string {
+	winO, winX := b.canWin(boardO), b.canWin(boardX)
+
+	switch {
+	case winO && winX:
+		return resultError
+	case winO:
+		return resultOWin
+	case winX:
+		return resultXWin
+	case b.countO+b.countX == boardSize:
+		return resultTie
+	default:
+		return resultInsufficientData
+	}
+}
+
 // loadBoard takes a string representing a tic-tac-toe board and loads it into the board.
 // The return value is an empty string if the board was loaded successfully.  Otherwise, it is a result... constant.
 func (b *board) load(input string) string {
