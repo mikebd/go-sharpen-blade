@@ -9,8 +9,8 @@ func Test_board_loadSuccess(t *testing.T) {
 		wantBoard board
 	}{
 		{
-			name:  "full board",
-			input: "x,o,x,o,x,o,x,o,x",
+			name:  "full board - with padding and mixed case",
+			input: " x,o , x ,o,X,o,x,O,x",
 			wantBoard: board{
 				cells: [3][3]rune{
 					{boardX, boardO, boardX},
@@ -51,6 +51,10 @@ func Test_board_loadError(t *testing.T) {
 		{
 			name:  "too many X",
 			input: ",,x,x,o,,,x,",
+		},
+		{
+			name:  "> 1 char in a cell",
+			input: ",,xo,,,,,,",
 		},
 	}
 	for _, tt := range tests {

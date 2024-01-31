@@ -15,7 +15,7 @@ func Test_ticTacToe(t *testing.T) {
 		},
 		{
 			name:  "O Win",
-			input: "x,O,x,o,o,x,,o,",
+			input: "x, O,x,o,o,x,,o,",
 			want:  "O Win",
 		},
 		{

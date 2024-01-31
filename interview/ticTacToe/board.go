@@ -126,8 +126,9 @@ func (b *board) load(input string) string {
 }
 
 func (b *board) cellStringToBoardRune(cell string) (rune, string) {
+	cell = strings.TrimSpace(cell)
 	cellLen := len(cell)
-	if cellLen == 0 || cellLen > 1 {
+	if cellLen == 0 {
 		return boardEmpty, ""
 	}
 	if cellLen > 1 {
