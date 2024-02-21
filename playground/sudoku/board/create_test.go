@@ -7,7 +7,7 @@ import (
 
 func Test_create(t *testing.T) {
 	type args struct {
-		initialValues [size]string
+		initialValues [CellCount]string
 	}
 	tests := []struct {
 		name string
@@ -16,9 +16,9 @@ func Test_create(t *testing.T) {
 	}{
 		{
 			name: "empty Board",
-			args: args{[size]string{}},
+			args: args{[CellCount]string{}},
 			want: Board{
-				rows: cellPointersArray{
+				rows: CellPointersArray{
 					{
 						NewCell(0, 0, EmptyRuneValue),
 						NewCell(0, 1, EmptyRuneValue),
@@ -111,7 +111,7 @@ func Test_create(t *testing.T) {
 						NewCell(8, 8, EmptyRuneValue),
 					},
 				},
-				cols: cellPointersArray{
+				cols: CellPointersArray{
 					{
 						NewCell(0, 0, EmptyRuneValue),
 						NewCell(1, 0, EmptyRuneValue),
@@ -204,7 +204,7 @@ func Test_create(t *testing.T) {
 						NewCell(8, 8, EmptyRuneValue),
 					},
 				},
-				scts: cellPointersArray{
+				scts: CellPointersArray{
 					{
 						NewCell(0, 0, EmptyRuneValue),
 						NewCell(0, 1, EmptyRuneValue),
@@ -300,7 +300,7 @@ func Test_create(t *testing.T) {
 			},
 		}, {
 			name: "three of each value",
-			args: args{[size]string{
+			args: args{[CellCount]string{
 				"1  2  3",
 				"4  5  6",
 				"7  8  9",
@@ -312,7 +312,7 @@ func Test_create(t *testing.T) {
 				"  7  8  9",
 			}},
 			want: Board{
-				rows: cellPointersArray{
+				rows: CellPointersArray{
 					{
 						NewCell(0, 0, OneRuneValue),
 						NewCell(0, 1, EmptyRuneValue),
@@ -405,7 +405,7 @@ func Test_create(t *testing.T) {
 						NewCell(8, 8, NineRuneValue),
 					},
 				},
-				cols: cellPointersArray{
+				cols: CellPointersArray{
 					{
 						NewCell(0, 0, OneRuneValue),
 						NewCell(1, 0, FourRuneValue),
@@ -498,7 +498,7 @@ func Test_create(t *testing.T) {
 						NewCell(8, 8, NineRuneValue),
 					},
 				},
-				scts: cellPointersArray{
+				scts: CellPointersArray{
 					{
 						NewCell(0, 0, OneRuneValue),
 						NewCell(0, 1, EmptyRuneValue),

@@ -18,7 +18,7 @@ func (board *Board) Validate() *Invalid {
 	result := Invalid{}
 
 	type args struct {
-		cells       cellPointersArray
+		cells       cell.CellPointersArray
 		resultField *[]int
 	}
 
@@ -28,7 +28,7 @@ func (board *Board) Validate() *Invalid {
 		{board.scts, &result.scts},
 	},
 		func(args args, _ int) {
-			lop.ForEach([]cellPointersArray{args.cells}, func(cells cellPointersArray, index int) {
+			lop.ForEach([]cell.CellPointersArray{args.cells}, func(cells cell.CellPointersArray, index int) {
 				if invalidCells(cells[index]) {
 					*args.resultField = append(*args.resultField, index)
 				}
@@ -38,7 +38,7 @@ func (board *Board) Validate() *Invalid {
 	return &result
 }
 
-func invalidCells(cells cellPointers) bool {
+func invalidCells(cells cell.CellPointers) bool {
 	// duplicate values
 	// count the number of times each value appears
 	// if any value appears more than once, the cells are invalid

@@ -7,27 +7,27 @@ import (
 
 // createEmptyBoard creates a board with no initial values.
 func createEmptyBoard() *Board {
-	board, _ := create([size]string{})
+	board, _ := create([CellCount]string{})
 	return board
 }
 
 // create creates a board with the given initial values.
 // The initial values are given as an array strings that should
-// not be longer than size.  emptyInitialValue is used to right
-// pad if an initial value string is shorter than size.
-func create(initialValues [size]string) (*Board, error) {
+// not be longer than CellCount.  emptyInitialValue is used to right
+// pad if an initial value string is shorter than CellCount.
+func create(initialValues [CellCount]string) (*Board, error) {
 	board := Board{}
 
-	for row := 0; row < size; row++ {
+	for row := 0; row < CellCount; row++ {
 		rowValues := initialValues[row]
 
-		if len(rowValues) > size {
+		if len(rowValues) > CellCount {
 			return nil, fmt.Errorf("invalid args to Board.create(), initialValues[%d] max length is %d, but it is of length %d",
-				row, size, len(rowValues))
+				row, CellCount, len(rowValues))
 		}
 
-		board.rows[row] = make(cellPointers, size)
-		for col := 0; col < size; col++ {
+		board.rows[row] = make(CellPointers, CellCount)
+		for col := 0; col < CellCount; col++ {
 			cellValue := EmptyRuneValue
 			if col < len(rowValues) {
 				cellValue = rune(rowValues[col])
@@ -36,13 +36,13 @@ func create(initialValues [size]string) (*Board, error) {
 		}
 	}
 
-	for sct := 0; sct < size; sct++ {
-		board.scts[sct] = make(cellPointers, size)
+	for sct := 0; sct < CellCount; sct++ {
+		board.scts[sct] = make(CellPointers, CellCount)
 	}
 
-	for col := 0; col < size; col++ {
-		board.cols[col] = make(cellPointers, size)
-		for row := 0; row < size; row++ {
+	for col := 0; col < CellCount; col++ {
+		board.cols[col] = make(CellPointers, CellCount)
+		for row := 0; row < CellCount; row++ {
 			cellPtr := board.rows[row][col]
 			board.cols[col][row] = cellPtr
 			board.section(row, col)[offsetWithinSection(row, col)] = cellPtr

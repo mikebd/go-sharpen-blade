@@ -1,21 +1,22 @@
 package board
 
 import (
+	. "go-sharpen-blade/playground/sudoku/cell"
 	"log"
 	"math"
 )
 
 // sctSize is the number of rows and the number of columns in a section,
-// i.e. the size of a "side" of a section.
+// i.e. the CellCount of a "side" of a section.
 var sctSize = func() int {
-	intSctSize := int(math.Sqrt(float64(size)))
-	if intSctSize*intSctSize != size {
-		log.Fatalf("size must be a perfect square, but size is %d", size)
+	intSctSize := int(math.Sqrt(float64(CellCount)))
+	if intSctSize*intSctSize != CellCount {
+		log.Fatalf("CellCount must be a perfect square, but CellCount is %d", CellCount)
 	}
 	return intSctSize
 }()
 
-func (board *Board) section(row, col int) cellPointers {
+func (board *Board) section(row, col int) CellPointers {
 	sectionOffset := col/sctSize + (row/sctSize)*sctSize
 	return board.scts[sectionOffset]
 }

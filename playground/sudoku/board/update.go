@@ -11,7 +11,7 @@ import (
 func (board *Board) setValue(row, col int, runeValue rune) (rune, error) {
 	c, err := board.cell(row, col)
 	if err != nil {
-		return NilRuneValue, fmt.Errorf("board.setValue() row and col must be between 0 and %d. row=%d, col=%d", size-1, row, col)
+		return NilRuneValue, fmt.Errorf("board.setValue() row and col must be between 0 and %d. row=%d, col=%d", CellCount-1, row, col)
 	}
 
 	return c.SetValue(runeValue), nil
