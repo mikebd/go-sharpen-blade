@@ -3,6 +3,7 @@ package board
 import (
 	"github.com/samber/lo"
 	lop "github.com/samber/lo/parallel"
+	"go-sharpen-blade/playground/sudoku/cell"
 )
 
 type Invalid struct {
@@ -38,21 +39,16 @@ func (board *Board) Validate() *Invalid {
 }
 
 func invalidCells(cells cellPointers) bool {
-	cellValue := func(cell *cell) value {
-		if cell == nil {
-			return nilValue
-		}
-		return cell.value
-	}
-
 	// duplicate values
 	// count the number of times each value appears
 	// if any value appears more than once, the cells are invalid
-	counts := lo.CountValuesBy(cells, cellValue)
+	counts := lo.CountValuesBy(cells, cell.Value)
 
-	for value, count := range counts {
-		if value != empty && count > 1 {
-			return true
+	for runeValue, count := range counts {
+		if !cell.EmptyRune(runeValue) {
+			if count > 1 {
+				return true
+			}
 		}
 	}
 

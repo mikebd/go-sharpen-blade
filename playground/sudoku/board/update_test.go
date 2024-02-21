@@ -1,17 +1,20 @@
 package board
 
-import "fmt"
+import (
+	"fmt"
+	. "go-sharpen-blade/playground/sudoku/cell"
+)
 
 func Example_board_setValue() {
 	board := createEmptyBoard()
 
-	_, err := board.setValue(0, 0, one)
+	_, err := board.setValue(0, 0, OneRuneValue)
 	if err != nil {
 		fmt.Println(err)
 	} else {
-		fmt.Println(board.rows[0][0].value)
-		fmt.Println(board.cols[0][0].value)
-		fmt.Println(board.section(0, 0)[0].value)
+		fmt.Println(board.rows[0][0].Value() - '0')
+		fmt.Println(board.cols[0][0].Value() - '0')
+		fmt.Println(board.section(0, 0)[0].Value() - '0')
 	}
 
 	// Output:

@@ -11,8 +11,8 @@ type turn struct {
 }
 
 // MakeTurn is an adaptor that exposes the internal setValue method as a Turn
-func (board *Board) MakeTurn(turnNumber, row, col int, turnValueRune rune) (game.Turn, error) {
-	previousValue, err := board.setValue(row, col, runeToValue(turnValueRune))
+func (board *Board) MakeTurn(turnNumber, row, col int, turnRuneValue rune) (game.Turn, error) {
+	previousRuneValue, err := board.setValue(row, col, turnRuneValue)
 	if err != nil {
 		return nil, err
 	}
@@ -23,8 +23,8 @@ func (board *Board) MakeTurn(turnNumber, row, col int, turnValueRune rune) (game
 		row:           row,
 		col:           col,
 		valid:         !invalid.Any(),
-		previousValue: previousValue.rune(),
-		value:         turnValueRune,
+		previousValue: previousRuneValue,
+		value:         turnRuneValue,
 	}, nil
 }
 

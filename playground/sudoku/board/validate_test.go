@@ -2,13 +2,14 @@ package board
 
 import (
 	"fmt"
+	. "go-sharpen-blade/playground/sudoku/cell"
 	"testing"
 )
 
 func Example_board_validate_valid() {
 	board := createEmptyBoard()
 
-	_, err := board.setValue(0, 0, one)
+	_, err := board.setValue(0, 0, OneRuneValue)
 	if err != nil {
 		fmt.Println(err)
 	}
@@ -53,7 +54,7 @@ func Example_board_validate_correctCompletedBoard() {
 func Test_board_validate_invalid(t *testing.T) {
 	type setValueArgs struct {
 		row, col int
-		value    value
+		value    rune
 	}
 
 	type args struct {
@@ -68,8 +69,8 @@ func Test_board_validate_invalid(t *testing.T) {
 			"duplicate value - row",
 			args{
 				[]setValueArgs{
-					{0, 0, one},
-					{0, 8, one},
+					{0, 0, OneRuneValue},
+					{0, 8, OneRuneValue},
 				},
 			},
 		},
@@ -77,8 +78,8 @@ func Test_board_validate_invalid(t *testing.T) {
 			"duplicate value - column",
 			args{
 				[]setValueArgs{
-					{0, 0, one},
-					{8, 0, one},
+					{0, 0, OneRuneValue},
+					{8, 0, OneRuneValue},
 				},
 			},
 		},
@@ -86,8 +87,8 @@ func Test_board_validate_invalid(t *testing.T) {
 			"duplicate value - section",
 			args{
 				[]setValueArgs{
-					{0, 0, one},
-					{1, 1, one},
+					{0, 0, OneRuneValue},
+					{1, 1, OneRuneValue},
 				},
 			},
 		},

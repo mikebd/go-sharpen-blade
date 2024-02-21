@@ -1,6 +1,9 @@
 package board
 
-import "fmt"
+import (
+	"fmt"
+	. "go-sharpen-blade/playground/sudoku/cell"
+)
 
 // createEmptyBoard creates a board with no initial values.
 func createEmptyBoard() *Board {
@@ -25,12 +28,11 @@ func create(initialValues [size]string) (*Board, error) {
 
 		board.rows[row] = make(cellPointers, size)
 		for col := 0; col < size; col++ {
-			cellValue := emptyRuneValue
+			cellValue := EmptyRuneValue
 			if col < len(rowValues) {
 				cellValue = rune(rowValues[col])
 			}
-			val := runeToValue(cellValue)
-			board.rows[row][col] = &cell{row, col, val, val}
+			board.rows[row][col] = NewCell(row, col, cellValue)
 		}
 	}
 

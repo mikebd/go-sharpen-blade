@@ -14,7 +14,7 @@ func (board *Board) equals(other *Board) bool {
 
 	for row := 0; row < board.Size(); row++ {
 		for col := 0; col < board.Size(); col++ {
-			if board.rows[row][col].value != other.rows[row][col].value {
+			if board.rows[row][col].Value() != other.rows[row][col].Value() {
 				return false
 			}
 		}
