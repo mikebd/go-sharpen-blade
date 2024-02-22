@@ -5,8 +5,8 @@ import (
 	. "go-sharpen-blade/playground/sudoku/cell"
 )
 
-// Board has cell accessors
-type Board struct {
+// board has cell accessors and implements to game.Engine interface.
+type board struct {
 	// rows is an array of horizontal rows of cells, the 0th cell is the leftmost cell.
 	rows CellPointersArray
 
@@ -19,20 +19,20 @@ type Board struct {
 	scts CellPointersArray
 }
 
-func (board *Board) Rows() CellPointersArray {
-	return board.rows
+func (b *board) Rows() CellPointersArray {
+	return b.rows
 }
 
 // cell returns a pointer to the cell.Cell at the given row and column.
-func (board *Board) cell(row, col int) (*Cell, error) {
+func (b *board) cell(row, col int) (*Cell, error) {
 	if row < 0 || row >= CellCount || col < 0 || col >= CellCount {
 		return nil, fmt.Errorf("board.cell() row and col must be between 0 and %d. row=%d, col=%d", CellCount-1, row, col)
 	}
 
-	return board.rows[row][col], nil
+	return b.rows[row][col], nil
 }
 
 // Size returns the number of cells in a row, column, or section.
-func (board *Board) Size() int {
-	return len(board.rows)
+func (b *board) Size() int {
+	return len(b.rows)
 }

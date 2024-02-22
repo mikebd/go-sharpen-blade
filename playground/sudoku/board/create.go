@@ -6,7 +6,7 @@ import (
 )
 
 // createEmptyBoard creates a board with no initial values.
-func createEmptyBoard() *Board {
+func createEmptyBoard() *board {
 	board, _ := create([CellCount]string{})
 	return board
 }
@@ -15,14 +15,14 @@ func createEmptyBoard() *Board {
 // The initial values are given as an array strings that should
 // not be longer than CellCount.  emptyInitialValue is used to right
 // pad if an initial value string is shorter than CellCount.
-func create(initialValues [CellCount]string) (*Board, error) {
-	board := Board{}
+func create(initialValues [CellCount]string) (*board, error) {
+	board := board{}
 
 	for row := 0; row < CellCount; row++ {
 		rowValues := initialValues[row]
 
 		if len(rowValues) > CellCount {
-			return nil, fmt.Errorf("invalid args to Board.create(), initialValues[%d] max length is %d, but it is of length %d",
+			return nil, fmt.Errorf("invalid args to board.create(), initialValues[%d] max length is %d, but it is of length %d",
 				row, CellCount, len(rowValues))
 		}
 

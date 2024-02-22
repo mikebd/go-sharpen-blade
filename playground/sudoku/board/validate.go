@@ -14,7 +14,7 @@ func (invalid *Invalid) Any() bool {
 	return invalid.rows != nil || invalid.cols != nil || invalid.scts != nil
 }
 
-func (board *Board) Validate() *Invalid {
+func (b *board) Validate() *Invalid {
 	result := Invalid{}
 
 	type args struct {
@@ -23,9 +23,9 @@ func (board *Board) Validate() *Invalid {
 	}
 
 	lop.ForEach([]args{
-		{board.rows, &result.rows},
-		{board.cols, &result.cols},
-		{board.scts, &result.scts},
+		{b.rows, &result.rows},
+		{b.cols, &result.cols},
+		{b.scts, &result.scts},
 	},
 		func(args args, _ int) {
 			lop.ForEach([]cell.CellPointersArray{args.cells}, func(cells cell.CellPointersArray, index int) {

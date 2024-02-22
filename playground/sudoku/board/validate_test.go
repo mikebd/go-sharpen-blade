@@ -22,7 +22,7 @@ func Example_board_validate_valid() {
 	// false
 }
 
-var correctCompletedBoard = func() *Board {
+var correctCompletedBoard = func() *board {
 	board, err := create([CellCount]string{
 		"534678912",
 		"672195348",
