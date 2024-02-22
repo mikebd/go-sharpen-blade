@@ -3,13 +3,14 @@ package cli
 import (
 	"fmt"
 	"github.com/inancgumus/screen"
+	. "go-sharpen-blade/playground/sudoku/cell"
 	"go-sharpen-blade/playground/sudoku/game/port"
 )
 
 type Console struct {
 }
 
-func (c *Console) Render(turns []*port.Turn) {
+func (c *Console) Render(turns []*port.Turn, rows CellPointersArray) {
 	screen.Clear()
 	screen.MoveTopLeft()
 	if len(turns) == 0 {
@@ -24,6 +25,6 @@ func (c *Console) Render(turns []*port.Turn) {
 		}
 		fmt.Printf("\tLast move was %s: row %d, column %d, value %c\n",
 			lastTurnValid, lastTurn.Row(), lastTurn.Col(), lastTurn.Value())
-		renderBoard(turns)
+		renderBoard(turns, rows)
 	}
 }

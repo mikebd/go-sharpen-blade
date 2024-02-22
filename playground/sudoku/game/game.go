@@ -8,7 +8,7 @@ import (
 )
 
 type game struct {
-	board    *Board
+	engine   port.Engine
 	renderer port.Renderer
 	turns    []*port.Turn
 }
@@ -19,7 +19,7 @@ func Register() {
 
 func newGame() error {
 	game := game{
-		board:    GenerateBoard(),
+		engine:   GenerateBoard(),
 		renderer: &cli.Console{},
 	}
 

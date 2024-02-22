@@ -3,11 +3,12 @@ package cli
 import (
 	"github.com/jedib0t/go-pretty/v6/table"
 	"github.com/jedib0t/go-pretty/v6/text"
+	. "go-sharpen-blade/playground/sudoku/cell"
 	"go-sharpen-blade/playground/sudoku/game/port"
 	"os"
 )
 
-func renderBoard(turns []*port.Turn) {
+func renderBoard(turns []*port.Turn, rows CellPointersArray) {
 	t := table.NewWriter()
 	t.SetOutputMirror(os.Stdout)
 	t.SetStyle(table.StyleColoredBlackOnBlueWhite)

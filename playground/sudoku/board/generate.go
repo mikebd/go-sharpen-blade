@@ -1,5 +1,7 @@
 package board
 
-func GenerateBoard() *Board {
+import game "go-sharpen-blade/playground/sudoku/game/port"
+
+func GenerateBoard() game.Engine {
 	return createEmptyBoard()
 }

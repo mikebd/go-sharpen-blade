@@ -19,6 +19,10 @@ type Board struct {
 	scts CellPointersArray
 }
 
+func (board *Board) Rows() CellPointersArray {
+	return board.rows
+}
+
 // cell returns a pointer to the cell.Cell at the given row and column.
 func (board *Board) cell(row, col int) (*Cell, error) {
 	if row < 0 || row >= CellCount || col < 0 || col >= CellCount {
