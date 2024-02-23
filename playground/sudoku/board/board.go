@@ -19,8 +19,8 @@ type board struct {
 	scts CellPointersArray
 }
 
-func (b *board) Rows() CellPointersArray {
-	return b.rows
+func (b *board) Sections() CellPointersArray {
+	return b.scts
 }
 
 // cell returns a pointer to the cell.Cell at the given row and column.

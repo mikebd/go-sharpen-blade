@@ -10,7 +10,7 @@ import (
 type Console struct {
 }
 
-func (c *Console) Render(turns []*port.Turn, rows CellPointersArray) {
+func (c *Console) Render(turns []*port.Turn, sections CellPointersArray) {
 	screen.Clear()
 	screen.MoveTopLeft()
 	if len(turns) == 0 {
@@ -25,6 +25,6 @@ func (c *Console) Render(turns []*port.Turn, rows CellPointersArray) {
 		}
 		fmt.Printf("\tLast move was %s: row %d, column %d, value %c\n",
 			lastTurnValid, lastTurn.Row(), lastTurn.Col(), lastTurn.Value())
-		renderBoard(turns, rows)
+		renderBoard(turns, sections)
 	}
 }
