@@ -12,11 +12,19 @@ func (b *board) equals(other *board) bool {
 		return false
 	}
 
-	for row := 0; row < b.Size(); row++ {
-		for col := 0; col < b.Size(); col++ {
-			if b.rows[row][col].Value() != other.rows[row][col].Value() {
-				return false
-			}
+	for i, row := range b.rows {
+		if !row.Equal(other.rows[i]) {
+			return false
+		}
+	}
+	for i, col := range b.cols {
+		if !col.Equal(other.cols[i]) {
+			return false
+		}
+	}
+	for i, sct := range b.scts {
+		if !sct.Equal(other.scts[i]) {
+			return false
 		}
 	}
 

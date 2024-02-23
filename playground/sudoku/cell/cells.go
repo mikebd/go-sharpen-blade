@@ -11,3 +11,18 @@ const CellCount int = 9
 type CellPointers []*Cell
 
 type CellPointersArray [CellCount]CellPointers
+
+func (cp CellPointers) Equal(other CellPointers) bool {
+	if cp == nil || other == nil {
+		return false
+	}
+	if len(cp) != len(other) {
+		return false
+	}
+	for i, c := range cp {
+		if !c.Equal(other[i]) {
+			return false
+		}
+	}
+	return true
+}
