@@ -20,7 +20,7 @@ func (cp CellPointers) Equal(other CellPointers) bool {
 		return false
 	}
 	for i, c := range cp {
-		if !c.Equal(other[i]) {
+		if c != other[i] && *c != *other[i] {
 			return false
 		}
 	}

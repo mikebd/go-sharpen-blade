@@ -18,14 +18,6 @@ func (c *Cell) Empty() bool {
 	return c.value == empty
 }
 
-func (c *Cell) Equal(other *Cell) bool {
-	return c != nil && other != nil &&
-		c.row == other.row &&
-		c.col == other.col &&
-		c.value == other.value &&
-		c.initialValue == other.initialValue
-}
-
 // SetValue sets the rune value of the Cell and returns the previous rune value.
 func (c *Cell) SetValue(runeValue rune) (previousRuneValue rune) {
 	previousRuneValue = c.value.rune()
