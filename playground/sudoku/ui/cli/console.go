@@ -10,6 +10,12 @@ import (
 type Console struct {
 }
 
+// Overwrites implements the port.Renderer interface
+func (c *Console) Overwrites() bool {
+	return true
+}
+
+// Render implements the port.Renderer interface
 func (c *Console) Render(turns []*port.Turn, sections CellPointersArray) {
 	screen.Clear()
 	screen.MoveTopLeft()
