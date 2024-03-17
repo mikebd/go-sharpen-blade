@@ -6,6 +6,7 @@ import (
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"go-sharpen-blade/command"
 	"go-sharpen-blade/config"
+	"go-sharpen-blade/playground/aws"
 	"go-sharpen-blade/playground/gitPull"
 	sudoku "go-sharpen-blade/playground/sudoku/game"
 	"log"
@@ -20,6 +21,7 @@ const (
 )
 
 func init() {
+	aws.Register()
 	gitPull.Register()
 	sudoku.Register()
 }
