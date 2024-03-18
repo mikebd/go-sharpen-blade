@@ -21,6 +21,8 @@ func aws() error {
 
 	log.Println("AWS Region:", cfg.Region)
 
+	// Display charged resources in the region
+
 	autoScalingClient := autoscaling.NewFromConfig(cfg)
 	autoScalingGroups, err := autoScalingClient.DescribeAutoScalingGroups(context.TODO(), &autoscaling.DescribeAutoScalingGroupsInput{})
 	if err != nil {
@@ -34,6 +36,31 @@ func aws() error {
 		return err
 	}
 	log.Println("Load Balancers:", loadBalancers.LoadBalancers)
+
+	// Delete charged resources in the region
+
+	forceDelete := true
+
+	for _, autoScalingGroup := range autoScalingGroups.AutoScalingGroups {
+		result, err := autoScalingClient.DeleteAutoScalingGroup(context.TODO(), &autoscaling.DeleteAutoScalingGroupInput{
+			AutoScalingGroupName: autoScalingGroup.AutoScalingGroupName,
+			ForceDelete:          &forceDelete,
+		})
+		if err != nil {
+			return err
+		}
+		log.Println("Delete Auto Scaling Group:", result)
+	}
+
+	for _, loadBalancer := range loadBalancers.LoadBalancers {
+		result, err := elbClient.DeleteLoadBalancer(context.TODO(), &elasticloadbalancingv2.DeleteLoadBalancerInput{
+			LoadBalancerArn: loadBalancer.LoadBalancerArn,
+		})
+		if err != nil {
+			return err
+		}
+		log.Println("Delete Load Balancer:", result)
+	}
 
 	return nil
 }
