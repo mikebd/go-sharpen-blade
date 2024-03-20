@@ -9,6 +9,8 @@ const (
 	van
 )
 
+const vanFitsInCarSpots = 3
+
 type api interface {
 	// isEmpty returns true if the parking lot is empty
 	isEmpty() bool

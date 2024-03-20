@@ -45,8 +45,22 @@ func (r *row) isFull() bool {
 }
 
 func (r *row) isFullFor(v vehicleType) bool {
-	//TODO implement me
-	panic("implement me")
+	if r.isFull() {
+		return true
+	}
+
+	switch v {
+	case motorcycle:
+		return false
+	case compactCar:
+		fallthrough
+	case regularCar:
+		return !r.hasEmptySpotForCarOrVan()
+	case van:
+		return !r.hasEmptySpotForVan()
+	default:
+		return true
+	}
 }
 
 func (r *row) spotCount() int {
@@ -85,4 +99,49 @@ func (r *row) spotsTakenBy(v vehicleType) int {
 	})
 
 	return int(takenBy.Load())
+}
+
+func (r *row) hasEmptySpotForCarOrVan() bool {
+	if len(r.spots) == 0 {
+		return false
+	}
+
+	empty := atomic.Bool{}
+	empty.Store(false)
+
+	lop.ForEach(r.spots, func(s *spot, _ int) {
+		if s.isEmpty() && !s.isMotorcycleSpot() {
+			empty.Store(true)
+		}
+	})
+
+	return empty.Load()
+}
+
+func (r *row) hasEmptySpotForVan() bool {
+	if len(r.spots) == 0 {
+		return false
+	}
+
+	consecutiveEmptyCarSpots := 0
+	for _, s := range r.spots {
+		if s.isEmpty() {
+			if s.isVanSpot() {
+				return true
+			}
+
+			if s.isCarSpot() {
+				consecutiveEmptyCarSpots++
+				if consecutiveEmptyCarSpots == vanFitsInCarSpots {
+					return true
+				}
+			} else {
+				consecutiveEmptyCarSpots = 0
+			}
+		} else {
+			consecutiveEmptyCarSpots = 0
+		}
+	}
+
+	return false
 }
