@@ -2,6 +2,8 @@ package parseValidateIPs
 
 import (
 	"encoding/json"
+	"net"
+	"slices"
 	"strings"
 )
 
@@ -18,7 +20,7 @@ type response struct {
 	Message   string
 }
 
-func extractPossibleIPs(responseBody string) []string {
+func extractValidIPs(responseBody string) []string {
 	r := response{}
 	err := json.Unmarshal([]byte(responseBody), &r)
 	if err != nil {
@@ -33,9 +35,11 @@ func extractPossibleIPs(responseBody string) []string {
 		ips = r.Message[colonPos+1:]
 	}
 
-	return strings.Fields(ips)
+	return slices.DeleteFunc(strings.Fields(ips), func(ip string) bool {
+		return !isValidIP(ip)
+	})
 }
 
 func isValidIP(ip string) bool {
-	return true
+	return net.ParseIP(ip) != nil
 }
