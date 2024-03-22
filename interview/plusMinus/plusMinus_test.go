@@ -2,9 +2,9 @@ package plusMinus
 
 import "testing"
 
-func TestSolution(t *testing.T) {
+func TestPlusMinus(t *testing.T) {
 	type args struct {
-		S string
+		expr string
 	}
 	tests := []struct {
 		name string
@@ -19,8 +19,8 @@ func TestSolution(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			if got := Solution(tt.args.S); got != tt.want {
-				t.Errorf("Solution() = %v, want %v", got, tt.want)
+			if got := plusMinus(tt.args.expr); got != tt.want {
+				t.Errorf("plusMinus() = %v, want %v", got, tt.want)
 			}
 		})
 	}

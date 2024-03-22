@@ -1,30 +1,39 @@
 package plusMinus
 
-func Solution(S string) int {
+import "log"
+
+func plusMinus(expr string) int {
 	result := 0
 	operator := '+'
 
-	for i := 0; i < len(S); i++ {
+	for i := 0; i < len(expr); i++ {
 		switch {
-		case S[i] == 'o' || S[i] == 'O':
-			if operator == '+' {
-				result += 1
-			} else {
-				result -= 1
-			}
+		case expr[i] == 'o' || expr[i] == 'O':
+			result = operate(result, operator, 1)
 			i += 2
-		case S[i] == 't' || S[i] == 'T':
-			if operator == '+' {
-				result += 2
-			} else {
-				result -= 2
-			}
+		case expr[i] == 't' || expr[i] == 'T':
+			result = operate(result, operator, 2)
 			i += 2
-		case S[i] == '+':
+		case expr[i] == '+':
 			operator = '+'
-		case S[i] == '-':
+		case expr[i] == '-':
 			operator = '-'
 		}
+	}
+
+	return result
+}
+
+func operate(currentValue int, operator rune, operand int) int {
+	result := currentValue
+
+	switch operator {
+	case '+':
+		result += operand
+	case '-':
+		result -= operand
+	default:
+		log.Fatalln("Invalid operator", operator)
 	}
 
 	return result
