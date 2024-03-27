@@ -7,5 +7,21 @@ func fib(n int) int {
 		return n
 	}
 
-	return fib(n-1) + fib(n-2)
+	cache := make([]int, n+1)
+
+	return fibCache(n, cache)
+}
+
+func fibCache(n int, cache []int) int {
+	if n <= 1 {
+		return n
+	}
+
+	if cache[n] != 0 {
+		return cache[n]
+	}
+
+	cache[n] = fibCache(n-1, cache) + fibCache(n-2, cache)
+
+	return cache[n]
 }
