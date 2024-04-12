@@ -2,7 +2,7 @@ package parseValidateIPs
 
 import (
 	"encoding/json"
-	"net"
+	"go-sharpen-blade/interview/util/validation"
 	"slices"
 	"strings"
 )
@@ -36,10 +36,6 @@ func extractValidIPs(responseBody string) []string {
 	}
 
 	return slices.DeleteFunc(strings.Fields(ips), func(ip string) bool {
-		return !isValidIP(ip)
+		return !validation.IsValidIPv4(ip)
 	})
-}
-
-func isValidIP(ip string) bool {
-	return net.ParseIP(ip) != nil
 }
