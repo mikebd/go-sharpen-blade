@@ -11,13 +11,14 @@ func Test_allValidIPsInvalid(t *testing.T) {
 		"1",
 		"12",
 		"123",
+		"1a23",
+		"00000",
 		"1231231231234",
 	}
-	var want []string
 	for _, tt := range tests {
 		t.Run(tt, func(t *testing.T) {
-			if got := allValidIPs(tt); !reflect.DeepEqual(got, want) {
-				t.Errorf("allValidIPs() = %v, want %v", got, want)
+			if got := allValidIPs(tt); len(got) != 0 {
+				t.Errorf("allValidIPs() = %v", got)
 			}
 		})
 	}
