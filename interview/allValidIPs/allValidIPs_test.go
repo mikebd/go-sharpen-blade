@@ -36,6 +36,9 @@ func Test_allValidIPsValid(t *testing.T) {
 			"1.11.1.1",
 			"11.1.1.1",
 		}},
+		{"123123123123", []string{
+			"123.123.123.123",
+		}},
 	}
 	for _, tt := range tests {
 		t.Run(tt.arg, func(t *testing.T) {
