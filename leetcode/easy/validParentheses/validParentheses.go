@@ -4,17 +4,13 @@ package validParentheses
 
 import (
 	"github.com/mikebd/go-util/pkg/collection"
-	"strings"
 )
 
-const (
-	// order is important, the index of each element in these strings must
-	// match the index of its corresponding element in the other string
-	opening = "({["
-	closing = ")}]"
-)
+func isValidDefault(s string) bool {
+	return IsValid(s, defaultMatcher{})
+}
 
-func isValid(s string) bool {
+func IsValid(s string, m Matcher) bool {
 	if len(s) == 0 || len(s)%2 != 0 {
 		return false
 	}
@@ -23,18 +19,18 @@ func isValid(s string) bool {
 
 	for _, r := range s {
 		if stack.IsEmpty() {
-			if isOpening(r) {
+			if m.IsOpening(r) {
 				stack.Push(r)
 			} else {
 				return false
 			}
 		} else {
 			switch {
-			case isOpening(r):
+			case m.IsOpening(r):
 				stack.Push(r)
-			case isClosing(r):
+			case m.IsClosing(r):
 				prevOpening, ok := stack.Pop()
-				if !ok || !isMatch(prevOpening, r) {
+				if !ok || !m.IsMatch(prevOpening, r) {
 					return false
 				}
 			}
@@ -42,18 +38,4 @@ func isValid(s string) bool {
 	}
 
 	return stack.IsEmpty()
-}
-
-func isOpening(r rune) bool {
-	return strings.Contains(opening, string(r))
-}
-
-func isClosing(r rune) bool {
-	return strings.Contains(closing, string(r))
-}
-
-func isMatch(openingRune, closingRune rune) bool {
-	openingIndex := strings.Index(opening, string(openingRune))
-	closingIndex := strings.Index(closing, string(closingRune))
-	return openingIndex >= 0 && closingIndex >= 0 && openingIndex == closingIndex
 }
