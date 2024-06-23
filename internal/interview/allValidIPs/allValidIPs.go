@@ -4,7 +4,7 @@ package allValidIPs
 // IPv4 addresses that can be created by inserting 3 x "." in the input string
 
 import (
-	"go-sharpen-blade/interview/util/validation"
+	"go-sharpen-blade/internal/interview/util/validation"
 	"strings"
 )
 

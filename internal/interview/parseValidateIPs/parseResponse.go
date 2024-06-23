@@ -2,7 +2,7 @@ package parseValidateIPs
 
 import (
 	"encoding/json"
-	"go-sharpen-blade/interview/util/validation"
+	"go-sharpen-blade/internal/interview/util/validation"
 	"slices"
 	"strings"
 )
