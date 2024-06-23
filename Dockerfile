@@ -7,7 +7,7 @@ COPY go.mod ./
 # COPY go.mod go.sum ./
 # RUN go mod download
 
-ADD config ./config
+ADD internal/config ./internal/config
 ADD main ./main
 
 RUN go build -o go-sharpen-blade ./main

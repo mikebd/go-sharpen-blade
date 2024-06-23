@@ -2,7 +2,7 @@ package config
 
 import (
 	"flag"
-	"go-sharpen-blade/command"
+	"go-sharpen-blade/internal/command"
 	"os"
 )
 

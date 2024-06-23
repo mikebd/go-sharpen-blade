@@ -1,7 +1,7 @@
 package game
 
 import (
-	"go-sharpen-blade/command"
+	"go-sharpen-blade/internal/command"
 	. "go-sharpen-blade/playground/sudoku/board"
 	"go-sharpen-blade/playground/sudoku/game/port"
 	"go-sharpen-blade/playground/sudoku/ui/cli"

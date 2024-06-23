@@ -1,7 +1,7 @@
 package gitPull
 
 import (
-	"go-sharpen-blade/command"
+	"go-sharpen-blade/internal/command"
 	"log"
 )
 
