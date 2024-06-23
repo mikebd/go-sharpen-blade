@@ -3,7 +3,7 @@
 package canBeMadeValidParentheses
 
 import (
-	"go-sharpen-blade/leetcode/easy/validParentheses"
+	"go-sharpen-blade/internal/competitive/leetcode/easy/validParentheses"
 )
 
 func canBeValid(s string, locked string) bool {
