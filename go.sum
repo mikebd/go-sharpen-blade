@@ -47,8 +47,8 @@ github.com/jmespath/go-jmespath/internal/testify v1.5.1 h1:shLQSRRSCCPj3f2gpwzGw
 github.com/jmespath/go-jmespath/internal/testify v1.5.1/go.mod h1:L3OGu8Wl2/fWfCI6z80xFu9LTZmf1ZRjMHUOPmWr69U=
 github.com/mattn/go-runewidth v0.0.15 h1:UNAjwbU9l54TA3KzvqLGxwWjHmMgBUVhBiTjelZgg3U=
 github.com/mattn/go-runewidth v0.0.15/go.mod h1:Jdepj2loyihRzMpdS35Xk/zdY8IAYHsh153qUoGf23w=
-github.com/mikebd/go-util v0.0.11 h1:oCztrrQAJbah9DvCLfKYr4ZLK7+EOOUFnPazMlGOHeg=
-github.com/mikebd/go-util v0.0.11/go.mod h1:MFFbmEbDnWBjPTxsy4okoW7587ZnqsiGV7Q9LhiowE0=
+github.com/mikebd/go-util v0.0.12 h1:6HUMsy6srhx9P78UN2o6G77xTdkzVOQMxQ1XQYuCWIk=
+github.com/mikebd/go-util v0.0.12/go.mod h1:SByhtetmaNbk5/oi5O6hPBTcpidyehtilUYCSIkpIYc=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/prometheus/client_golang v1.19.0 h1:ygXvpU1AoN1MhdzckN+PyD9QJOSD4x7kmXYlnfbA6JU=

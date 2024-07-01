@@ -1,8 +1,8 @@
 module go-sharpen-blade
 
-go 1.22
+go 1.22.4
 
-require github.com/mikebd/go-util v0.0.11
+require github.com/mikebd/go-util v0.0.12
 
 require (
 	github.com/aws/aws-sdk-go-v2/config v1.27.11
