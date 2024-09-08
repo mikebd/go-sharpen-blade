@@ -5,6 +5,15 @@ Sharpening my Golang skills with coding challenges and skunkworks.
 Some packages are only executed as unit tests, others can be run as commands using the
 `-c <command>` argument.  The `-l` argument will list the available commands.
 
+## Work in Progress
+
+* This repository is currently transitioning from a single `main.go` to multiple `cmd` packages
+
+## Vanilla Go
+
+* This repository aims to minimize third-party library dependencies, allowing the author the most opportunity to
+  idiomatically leverage the Standard Library.
+
 ## Running in Docker
 
 * `docker build -t go-sharpen-blade .` - Build the Docker image
