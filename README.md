@@ -13,6 +13,7 @@ Some packages are only executed as unit tests, others can be run as commands usi
 
 * This repository aims to minimize third-party library dependencies, allowing the author the most opportunity to
   idiomatically leverage the Standard Library.
+* Reusable code is extracted to [github.com/mikebd/go-util](https://github.com/mikebd/go-util)
 
 ## Running in Docker
 
