@@ -9,10 +9,11 @@ Some packages are only executed as unit tests, others can be run as commands usi
 
 * This repository is currently transitioning from a single `main.go` to multiple `cmd` packages
 
-## Vanilla Go
+## Minimal Third-Party Dependencies
 
-* This repository aims to minimize third-party library dependencies, allowing the author the most opportunity to
-  idiomatically leverage the Standard Library.
+* This repository may minimize third-party library dependencies, but not obsessively so as a goal in itself.
+* Opportunities may be taken for learning or other purposes to implement functionality here that is available in third-party
+  libraries.  These may be replaced with third-party libraries in the future as needs and interest change or time allows.
 * Reusable code is extracted to [github.com/mikebd/go-util](https://github.com/mikebd/go-util)
 
 ## Running in Docker
