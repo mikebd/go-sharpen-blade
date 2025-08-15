@@ -10,6 +10,7 @@ import (
 )
 
 func TestGiftExchange(t *testing.T) {
+	t.Parallel()
 	tests := []struct {
 		name       string
 		filename   string
@@ -17,16 +18,28 @@ func TestGiftExchange(t *testing.T) {
 		errRequire require.ErrorAssertionFunc
 	}{
 		{
+			name:       "invalid input - 1 person",
+			filename:   "invalid_1",
+			wantLen:    0,
+			errRequire: require.Error,
+		},
+		{
 			name:       "valid input - 3 people",
 			filename:   "valid_3",
 			wantLen:    3,
 			errRequire: require.NoError,
 		},
 		{
-			name:       "invalid input - 1 person",
-			filename:   "invalid_1",
-			wantLen:    0,
-			errRequire: require.Error,
+			name:       "valid input - 4 people",
+			filename:   "valid_4",
+			wantLen:    4,
+			errRequire: require.NoError,
+		},
+		{
+			name:       "valid input - 5 people",
+			filename:   "valid_5",
+			wantLen:    5,
+			errRequire: require.NoError,
 		},
 	}
 
